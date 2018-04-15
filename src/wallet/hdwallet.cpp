@@ -10539,8 +10539,9 @@ bool CHDWallet::IsSpent(const uint256& hash, unsigned int n) const
                 continue;
 
             int depth = mit->second.GetDepthInMainChain();
-            if (depth > 0  || (depth == 0 && !mit->second.isAbandoned()))
+            if (depth > 0  || (depth == 0 && !mit->second.isAbandoned())) {
                 return true; // Spent
+            }
         };
 
         MapRecords_t::const_iterator rit = mapRecords.find(wtxid);
@@ -11044,6 +11045,7 @@ void CHDWallet::AvailableCoinsForStaking(std::vector<COutput> &vCoins, int64_t n
                 continue;
 
             const uint256 &wtxid = it->first;
+
             for (size_t i = 0; i < tx->vpout.size(); ++i)
             {
                 const auto &txout = tx->vpout[i];
@@ -11051,8 +11053,7 @@ void CHDWallet::AvailableCoinsForStaking(std::vector<COutput> &vCoins, int64_t n
                     continue;
 
                 COutPoint kernel(wtxid, i);
-                if (!CheckStakeUnused(kernel)
-                     || IsSpent(wtxid, i))
+                if (!CheckStakeUnused(kernel) || IsSpent(wtxid, i))
                     continue;
 
                 const CScript *pscriptPubKey = txout->GetPScriptPubKey();
@@ -11133,6 +11134,7 @@ void CHDWallet::AvailableCoinsForStaking(std::vector<COutput> &vCoins, int64_t n
 bool CHDWallet::SelectCoinsForStaking(int64_t nTargetValue, int64_t nTime, int nHeight, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, int64_t& nValueRet) const
 {
     std::vector<COutput> vCoins;
+
     AvailableCoinsForStaking(vCoins, nTime, nHeight);
 
     setCoinsRet.clear();
