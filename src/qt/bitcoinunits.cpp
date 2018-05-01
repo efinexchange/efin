@@ -40,9 +40,9 @@ QString BitcoinUnits::longName(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("PART");
-    case mBTC: return QString("mPART");
-    case uBTC: return QString::fromUtf8("μPART (parts)");
+    case BTC: return QString("EFIN");
+    case mBTC: return QString("mEFIN");
+    case uBTC: return QString::fromUtf8("μEFIN (efins)");
     default: return QString("???");
     }
 }
@@ -51,7 +51,7 @@ QString BitcoinUnits::shortName(int unit)
 {
     switch(unit)
     {
-    case uBTC: return QString::fromUtf8("parts");
+    case uBTC: return QString::fromUtf8("efins");
     default:   return longName(unit);
     }
 }
@@ -60,9 +60,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("Particls");
-    case mBTC: return QString("Milli-Particls (1 / 1" THIN_SP_UTF8 "000)");
-    case uBTC: return QString("Micro-Particls (parts) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case BTC: return QString("Efins");
+    case mBTC: return QString("Milli-Efins (1 / 1" THIN_SP_UTF8 "000)");
+    case uBTC: return QString("Micro-Efinss (parts) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
 }
