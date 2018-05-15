@@ -1090,7 +1090,7 @@ UniValue extkey(const JSONRPCRequest &request)
         {
             if (!eKey58.IsValid(CChainParams::EXT_SECRET_KEY)
                 && !eKey58.IsValid(CChainParams::EXT_PUBLIC_KEY_BTC))
-                throw std::runtime_error("Import failed - Key must begin with a particl prefix.");
+                throw std::runtime_error("Import failed - Key must begin with a efin prefix.");
         };
 
         sek.kp = eKey58.GetKey();
@@ -1816,7 +1816,7 @@ UniValue getnewextaddress(const JSONRPCRequest &request)
             "3. bech32              (bool, optional, default=false) Use Bech32 encoding.\n"
             "4. hardened            (bool, optional, default=false) Derive a hardened key.\n"
             "\nResult:\n"
-            "\"address\"              (string) The new particl extended address\n"
+            "\"address\"              (string) The new efin extended address\n"
             "\nExamples:\n"
             + HelpExampleCli("getnewextaddress", "")
             + HelpExampleRpc("getnewextaddress", ""));
@@ -1884,7 +1884,7 @@ UniValue getnewstealthaddress(const JSONRPCRequest &request)
             "4. bech32              (bool, optional, default=false) Use Bech32 encoding.\n"
             "5. makeV2              (bool, optional, default=false) Generate an address from the same method used for hardware wallets.\n"
             "\nResult:\n"
-            "\"address\"              (string) The new particl stealth address\n"
+            "\"address\"              (string) The new efin stealth address\n"
             "\nExamples:\n"
             + HelpExampleCli("getnewstealthaddress", "\"lblTestSxAddrPrefix\" 3 \"0b101\"")
             + HelpExampleRpc("getnewstealthaddress", "\"lblTestSxAddrPrefix\", 3, \"0b101\""));
@@ -1960,7 +1960,7 @@ UniValue importstealthaddress(const JSONRPCRequest &request)
             "           Stealth addresses with prefixes will scan only incoming stealth transactions with a matching prefix.\n"
             "6. bech32              (bool, optional) Use Bech32 encoding.\n"
             "\nResult:\n"
-            "\"address\"              (string) The new particl stealth address\n"
+            "\"address\"              (string) The new efin stealth address\n"
             "\nExamples:\n"
             + HelpExampleCli("importstealthaddress", "scan_secret spend_secret \"label\" 3 \"0b101\"")
             + HelpExampleRpc("importstealthaddress", "scan_secret, spend_secret, \"label\", 3, \"0b101\""));
@@ -3857,8 +3857,8 @@ UniValue getstakinginfo(const JSONRPCRequest &request)
             "  \"staking\": true|false,         (boolean) if this wallet is staking or not\n"
             "  \"errors\": \"...\"              (string) any error messages\n"
             "  \"percentyearreward\": xxxxxxx,  (numeric) current stake reward percentage\n"
-            "  \"moneysupply\": xxxxxxx,        (numeric) the total amount of particl in the network\n"
-            "  \"reserve\": xxxxxxx,            (numeric) the total amount of particl in the network\n"
+            "  \"moneysupply\": xxxxxxx,        (numeric) the total amount of efin in the network\n"
+            "  \"reserve\": xxxxxxx,            (numeric) the total amount of efin in the network\n"
             "  \"walletfoundationdonationpercent\": xxxxxxx,\n    (numeric) user set percentage of the block reward ceded to the foundation\n"
             "  \"foundationdonationpercent\": xxxxxxx,\n    (numeric) network enforced percentage of the block reward ceded to the foundation\n"
             "  \"foundationdonationpercent\": xxxxxxx,\n    (numeric) network enforced percentage of the block reward ceded to the foundation\n"
@@ -4094,9 +4094,9 @@ UniValue listunspentanon(const JSONRPCRequest &request)
             "\nArguments:\n"
             "1. minconf          (numeric, optional, default=1) The minimum confirmations to filter\n"
             "2. maxconf          (numeric, optional, default=9999999) The maximum confirmations to filter\n"
-            "3. \"addresses\"    (string) A json array of particl addresses to filter\n"
+            "3. \"addresses\"    (string) A json array of efin addresses to filter\n"
             "    [\n"
-            "      \"address\"   (string) particl address\n"
+            "      \"address\"   (string) efin address\n"
             "      ,...\n"
             "    ]\n"
             "4. include_unsafe (bool, optional, default=true) Include outputs that are not safe to spend\n"
@@ -4117,7 +4117,7 @@ UniValue listunspentanon(const JSONRPCRequest &request)
             "  {\n"
             "    \"txid\" : \"txid\",          (string) the transaction id \n"
             "    \"vout\" : n,               (numeric) the vout value\n"
-            "    \"address\" : \"address\",    (string) the particl address\n"
+            "    \"address\" : \"address\",    (string) the efin address\n"
             "    \"account\" : \"account\",    (string) DEPRECATED. The associated account, or \"\" for the default account\n"
             //"    \"scriptPubKey\" : \"key\",   (string) the script key\n"
             "    \"amount\" : x.xxx,         (numeric) the transaction output amount in " + CURRENCY_UNIT + "\n"
@@ -4290,9 +4290,9 @@ UniValue listunspentblind(const JSONRPCRequest &request)
             "\nArguments:\n"
             "1. minconf          (numeric, optional, default=1) The minimum confirmations to filter\n"
             "2. maxconf          (numeric, optional, default=9999999) The maximum confirmations to filter\n"
-            "3. \"addresses\"      (string) A json array of particl addresses to filter\n"
+            "3. \"addresses\"      (string) A json array of efin addresses to filter\n"
             "    [\n"
-            "      \"address\"   (string) particl address\n"
+            "      \"address\"   (string) efin address\n"
             "      ,...\n"
             "    ]\n"
             "4. include_unsafe (bool, optional, default=true) Include outputs that are not safe to spend\n"
@@ -4312,7 +4312,7 @@ UniValue listunspentblind(const JSONRPCRequest &request)
             "  {\n"
             "    \"txid\" : \"txid\",          (string) the transaction id \n"
             "    \"vout\" : n,               (numeric) the vout value\n"
-            "    \"address\" : \"address\",    (string) the particl address\n"
+            "    \"address\" : \"address\",    (string) the efin address\n"
             "    \"account\" : \"account\",    (string) DEPRECATED. The associated account, or \"\" for the default account\n"
             "    \"scriptPubKey\" : \"key\",   (string) the script key\n"
             "    \"amount\" : x.xxx,         (numeric) the transaction output amount in " + CURRENCY_UNIT + "\n"
@@ -4917,7 +4917,7 @@ static std::string SendHelp(CHDWallet *pwallet, OutputTypes typeIn, OutputTypes 
     rv += HelpRequiringPassphrase(pwallet);
 
     rv +=   "\nArguments:\n"
-            "1. \"address\"     (string, required) The particl address to send to.\n"
+            "1. \"address\"     (string, required) The efin address to send to.\n"
             "2. \"amount\"      (numeric or string, required) The amount in " + CURRENCY_UNIT + " to send. eg 0.1\n"
             "3. \"comment\"     (string, optional) A comment used to store what the transaction is for. \n"
             "                            This is not part of the transaction, just kept in your wallet.\n"
@@ -5047,7 +5047,7 @@ UniValue sendtypeto(const JSONRPCRequest &request)
             "1. \"typein\"          (string, required) part/blind/anon\n"
             "2. \"typeout\"         (string, required) part/blind/anon\n"
             "3. \"outputs\"         (json, required) Array of output objects\n"
-            "    3.1 \"address\"    (string, required) The particl address to send to.\n"
+            "    3.1 \"address\"    (string, required) The efin address to send to.\n"
             "    3.2 \"amount\"     (numeric or string, required) The amount in " + CURRENCY_UNIT + " to send. eg 0.1\n"
             "    3.x \"narr\"       (string, optional) Up to 24 character narration sent with the transaction.\n"
             "    3.x \"subfee\"     (boolean, optional, default=false) The fee will be deducted from the amount being sent.\n"

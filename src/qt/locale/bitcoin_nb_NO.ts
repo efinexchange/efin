@@ -414,8 +414,8 @@
         <translation>Hjelpelinje for fliker</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and particl: URIs)</source>
-        <translation>Be om betalinger (genererer QR-koder og particl-URIer)</translation>
+        <source>Request payments (generates QR codes and efin: URIs)</source>
+        <translation>Be om betalinger (genererer QR-koder og efin-URIer)</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>

@@ -392,7 +392,7 @@ Alihkan fail data ke dalam tab semasa</translation>
     </message>
     <message>
         <source>Sign messages with your Particl addresses to prove you own them</source>
-        <translation>sahkan mesej bersama alamat particl anda untuk menunjukkan alamat ini anda punya</translation>
+        <translation>sahkan mesej bersama alamat efin anda untuk menunjukkan alamat ini anda punya</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>

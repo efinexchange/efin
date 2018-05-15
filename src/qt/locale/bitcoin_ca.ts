@@ -426,8 +426,8 @@
         <translation>Mostra la llista d'adreces de recepció i etiquetes utilitzades</translation>
     </message>
     <message>
-        <source>Open a particl: URI or payment request</source>
-        <translation>Obre una particl: sol·licitud d'URI o pagament</translation>
+        <source>Open a efin: URI or payment request</source>
+        <translation>Obre una efin: sol·licitud d'URI o pagament</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>

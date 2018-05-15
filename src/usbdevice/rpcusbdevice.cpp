@@ -215,7 +215,7 @@ UniValue getdevicexpub(const JSONRPCRequest &request)
             "                           The full path is \"accountpath\"/\"path\".\n"
             "2. \"accountpath\"       (string, optional) Account path, set to empty string to ignore (default=\""+GetDefaultPath()+"\").\n"
             "\nResult\n"
-            "\"address\"              (string) The particl extended public key\n"
+            "\"address\"              (string) The efin extended public key\n"
             "\nExamples\n"
             + HelpExampleCli("getdevicexpub", "\"0\"")
             + HelpExampleRpc("getdevicexpub", "\"0\""));
@@ -830,7 +830,7 @@ UniValue devicegetnewstealthaddress(const JSONRPCRequest &request)
             "           Stealth addresses with prefixes will scan only incoming stealth transactions with a matching prefix.\n"
             "4. bech32              (bool, optional) Use Bech32 encoding, default true.\n"
             "\nResult:\n"
-            "\"address\"              (string) The new particl stealth address\n"
+            "\"address\"              (string) The new efin stealth address\n"
             "\nExamples:\n"
             + HelpExampleCli("devicegetnewstealthaddress", "\"lblTestSxAddrPrefix\" 3 \"0b101\"")
             + HelpExampleRpc("devicegetnewstealthaddress", "\"lblTestSxAddrPrefix\", 3, \"0b101\""));

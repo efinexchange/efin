@@ -918,7 +918,7 @@
         <translation>Formulaire</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the particl network, as detailed below.</source>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the efin network, as detailed below.</source>
         <translation>Les transactions récentes ne sont peut-être pas encore visibles et par conséquent le solde de votre porte-monnaie est peut-être erroné. Cette information sera juste quand votre porte-monnaie aura fini de se synchroniser avec le réseau Particl, comme décrit ci-dessous.</translation>
     </message>
     <message>
@@ -2376,8 +2376,8 @@
         <translation>Saisir une étiquette pour cette adresse afin de l’ajouter à la liste d’adresses utilisées</translation>
     </message>
     <message>
-        <source>A message that was attached to the particl: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Particl network.</source>
-        <translation>Un message qui était joint à l’URI particl: et qui sera stocké avec la transaction pour référence. Note : ce message ne sera pas envoyé par le réseau Particl.</translation>
+        <source>A message that was attached to the efin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Particl network.</source>
+        <translation>Un message qui était joint à l’URI efin: et qui sera stocké avec la transaction pour référence. Note : ce message ne sera pas envoyé par le réseau Particl.</translation>
     </message>
     <message>
         <source>Pay To:</source>
