@@ -291,7 +291,7 @@ BOOST_AUTO_TEST_CASE(stake_test)
 
         // Reduce the reward
         RegtestParams().SetCoinYearReward(1 * CENT);
-        BOOST_CHECK(Params().GetCoinYearReward(0) == 1 * CENT);
+        BOOST_CHECK(Params().GetCoinYearReward(0, MAX_MONEY) == 1 * CENT);
 
         {
             LOCK(cs_main);
@@ -306,7 +306,7 @@ BOOST_AUTO_TEST_CASE(stake_test)
 
             // restore the reward
             RegtestParams().SetCoinYearReward(2 * CENT);
-            BOOST_CHECK(Params().GetCoinYearReward(0) == 2 * CENT);
+            BOOST_CHECK(Params().GetCoinYearReward(0, MAX_MONEY) == 2 * CENT);
 
             // block should connect now
             CValidationState clearstate;

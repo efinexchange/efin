@@ -93,7 +93,7 @@ public:
     uint32_t GetTargetTimespan() const { return nTargetTimespan; }
 
     uint32_t GetStakeTimestampMask(int nHeight) const { return nStakeTimestampMask; }
-    int64_t GetCoinYearReward(int64_t nTime) const;
+    int64_t GetCoinYearReward(int64_t nTime, CAmount nAmount) const;
 
     const DevFundSettings *GetDevFundSettings(int64_t nTime) const;
     const std::vector<std::pair<int64_t, DevFundSettings> > &GetDevFundSettings() const {return vDevFundSettings;};
@@ -156,7 +156,7 @@ protected:
     uint32_t nTargetTimespan;
 
     uint32_t nStakeTimestampMask = (1 << 4) -1; // 4 bits, every kernel stake hash will change every 16 seconds
-    int64_t nCoinYearReward = 2 * CENT; // 2% per year
+    int64_t nCoinYearReward = 1 * CENT; // 1% per year
 
     std::vector<CImportedCoinbaseTxn> vImportedCoinbaseTxns;
     uint32_t nLastImportHeight;       // set from vImportedCoinbaseTxns

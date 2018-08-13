@@ -3890,8 +3890,8 @@ UniValue getstakinginfo(const JSONRPCRequest &request)
     {
         LOCK(cs_main);
         nTipTime = chainActive.Tip()->nTime;
-        rCoinYearReward = Params().GetCoinYearReward(nTipTime) / CENT;
         nMoneySupply = chainActive.Tip()->nMoneySupply;
+        rCoinYearReward = Params().GetCoinYearReward(nTipTime, nMoneySupply) / CENT;
     }
 
     uint64_t nWeight = pwallet->GetStakeWeight();
