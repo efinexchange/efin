@@ -391,7 +391,7 @@ Alihkan fail data ke dalam tab semasa</translation>
         <translation>sulitkan kata laluan milik peribadi anda </translation>
     </message>
     <message>
-        <source>Sign messages with your Particl addresses to prove you own them</source>
+        <source>Sign messages with your Efin addresses to prove you own them</source>
         <translation>sahkan mesej bersama alamat efin anda untuk menunjukkan alamat ini anda punya</translation>
     </message>
     <message>

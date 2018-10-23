@@ -319,8 +319,8 @@ Exportar los datos en la pestaña actual a un archivo</translation>
         <translation>Reindexando bloques en el disco ...</translation>
     </message>
     <message>
-        <source>Send coins to a Particl address</source>
-        <translation>Enviando monedas a una dirección de Particl</translation>
+        <source>Send coins to a Efin address</source>
+        <translation>Enviando monedas a una dirección de Efin</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -343,8 +343,8 @@ Exportar los datos en la pestaña actual a un archivo</translation>
         <translation>&amp;Verificar Mensaje...</translation>
     </message>
     <message>
-        <source>Particl</source>
-        <translation>Particl</translation>
+        <source>Efin</source>
+        <translation>Efin</translation>
     </message>
     <message>
         <source>Wallet</source>

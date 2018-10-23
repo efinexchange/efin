@@ -23,7 +23,7 @@
 
 #include <unordered_map>
 
-extern bool fParticlMode;
+extern bool fEfinMode;
 
 /**
  * A UTXO entry.
@@ -88,7 +88,7 @@ public:
         uint32_t code = nHeight * 2 + fCoinBase;
         ::Serialize(s, VARINT(code));
         ::Serialize(s, CTxOutCompressor(REF(out)));
-        if (!fParticlMode) return;
+        if (!fEfinMode) return;
         ::Serialize(s, nType);
         if (nType == OUTPUT_CT)
             s.write((char*)&commitment.data[0], 33);
@@ -101,7 +101,7 @@ public:
         nHeight = code >> 1;
         fCoinBase = code & 1;
         ::Unserialize(s, REF(CTxOutCompressor(out)));
-        if (!fParticlMode) return;
+        if (!fEfinMode) return;
         ::Unserialize(s, nType);
         if (nType == OUTPUT_CT)
             s.read((char*)&commitment.data[0], 33);

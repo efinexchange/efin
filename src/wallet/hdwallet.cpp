@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018 The Particl Core developers
+// Copyright (c) 2017-2018 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -150,7 +150,7 @@ std::string CHDWallet::GetWalletHelpString(bool showDebug)
 {
     std::string strUsage = ::GetWalletHelpString(showDebug);
 
-    strUsage += HelpMessageGroup(_("Particl wallet options:"));
+    strUsage += HelpMessageGroup(_("Efin wallet options:"));
     strUsage += HelpMessageOpt("-defaultlookaheadsize=<n>", strprintf(_("Number of keys to load into the lookahead pool per chain. (default: %u)"), N_DEFAULT_LOOKAHEAD));
     strUsage += HelpMessageOpt("-extkeysaveancestors", strprintf(_("On saving a key from the lookahead pool, save all unsaved keys leading up to it too. (default: %s)"), "true"));
     strUsage += HelpMessageOpt("-createdefaultmasterkey", strprintf(_("Generate a random master key and main account if no master key exists. (default: %s)"), "false"));
@@ -207,7 +207,7 @@ bool CHDWallet::InitLoadWallet()
             pwallet->LoadStealthAddresses();
             pwallet->PrepareLookahead(); // Must happen after ExtKeyLoadAccountPacks
 
-            fParticlWallet = true;
+            fEfinWallet = true;
         }
 
         {
@@ -1760,7 +1760,7 @@ CAmount CHDWallet::GetDebit(const CTxIn &txin, const isminefilter &filter) const
 
 CAmount CHDWallet::GetDebit(const CTransaction& tx, const isminefilter& filter) const
 {
-    if (!tx.IsParticlVersion())
+    if (!tx.IsEfinVersion())
         return CWallet::GetDebit(tx, filter);
 
     CAmount nDebit = 0;
@@ -3220,7 +3220,7 @@ int CHDWallet::AddStandardInputs(CWalletTx &wtx, CTransactionRecord &rtx,
     wtx.BindWallet(this);
     wtx.fFromMe = true;
     CMutableTransaction txNew;
-    txNew.nVersion = PARTICL_TXN_VERSION;
+    txNew.nVersion = EFIN_TXN_VERSION;
     txNew.vout.clear();
 
     // Discourage fee sniping. See CWallet::CreateTransaction
@@ -3420,7 +3420,7 @@ int CHDWallet::AddStandardInputs(CWalletTx &wtx, CTransactionRecord &rtx,
                 const CScript& scriptPubKey = *coin.txoutBase->GetPScriptPubKey();
                 SignatureData sigdata;
 
-                if (!ProduceSignature(DummySignatureCreatorParticl(this), scriptPubKey, sigdata))
+                if (!ProduceSignature(DummySignatureCreatorEfin(this), scriptPubKey, sigdata))
                     return errorN(1, sError, __func__, "Dummy signature failed.");
                 UpdateTransaction(txNew, nIn, sigdata);
                 nIn++;
@@ -3786,7 +3786,7 @@ int CHDWallet::AddBlindedInputs(CWalletTx &wtx, CTransactionRecord &rtx,
     wtx.BindWallet(this);
     wtx.fFromMe = true;
     CMutableTransaction txNew;
-    txNew.nVersion = PARTICL_TXN_VERSION;
+    txNew.nVersion = EFIN_TXN_VERSION;
     txNew.vout.clear();
 
     // Discourage fee sniping. See CWallet::CreateTransaction
@@ -3940,7 +3940,7 @@ int CHDWallet::AddBlindedInputs(CWalletTx &wtx, CTransactionRecord &rtx,
                 const CScript &scriptPubKey = oR->scriptPubKey;
                 SignatureData sigdata;
 
-                if (!ProduceSignature(DummySignatureCreatorParticl(this), scriptPubKey, sigdata))
+                if (!ProduceSignature(DummySignatureCreatorEfin(this), scriptPubKey, sigdata))
                     return errorN(1, sError, __func__, "Dummy signature failed.");
                 UpdateTransaction(txNew, nIn, sigdata);
                 nIn++;
@@ -4400,7 +4400,7 @@ int CHDWallet::AddAnonInputs(CWalletTx &wtx, CTransactionRecord &rtx,
     wtx.BindWallet(this);
     wtx.fFromMe = true;
     CMutableTransaction txNew;
-    txNew.nVersion = PARTICL_TXN_VERSION;
+    txNew.nVersion = EFIN_TXN_VERSION;
     txNew.vout.clear();
 
     txNew.nLockTime = 0;
@@ -7887,7 +7887,7 @@ bool CHDWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalle
 {
     LogPrintf("CHDWallet %s\n", __func__);
 
-    if (!fParticlWallet)
+    if (!fEfinWallet)
         return CWallet::CreateTransaction(vecSend, wtxNew, reservekey, nFeeRet, nChangePosInOut, strFailReason, coin_control, sign);
 
     std::vector<CTempRecipient> vecSendB;
@@ -11312,7 +11312,7 @@ bool CHDWallet::CreateCoinStake(unsigned int nBits, int64_t nTime, int nBlockHei
             txNew.vpout.clear();
 
             // Mark as coin stake transaction
-            txNew.nVersion = PARTICL_TXN_VERSION;
+            txNew.nVersion = EFIN_TXN_VERSION;
             txNew.SetType(TXN_COINSTAKE);
 
             txNew.vin.push_back(CTxIn(pcoin.first->GetHash(), pcoin.second));
@@ -11538,7 +11538,7 @@ bool CHDWallet::SignBlock(CBlockTemplate *pblocktemplate, int nHeight, int64_t n
     CBlockIndex *pindexPrev = chainActive.Tip();
 
     CKey key;
-    pblock->nVersion = PARTICL_BLOCK_VERSION;
+    pblock->nVersion = EFIN_BLOCK_VERSION;
     pblock->nBits = GetNextTargetRequired(pindexPrev);
     LogPrint(BCLog::POS, "%s, nBits %d\n", __func__, pblock->nBits);
 

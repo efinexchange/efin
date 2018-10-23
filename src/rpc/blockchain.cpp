@@ -1224,7 +1224,7 @@ UniValue gettxoutsetinfo(const JSONRPCRequest& request)
         ret.push_back(Pair("bestblock", stats.hashBlock.GetHex()));
         ret.push_back(Pair("transactions", (int64_t)stats.nTransactions));
         ret.push_back(Pair("txouts", (int64_t)stats.nTransactionOutputs));
-        if (fParticlMode)
+        if (fEfinMode)
             ret.push_back(Pair("txouts_blinded", (int64_t)stats.nBlindedTransactionOutputs));
         ret.push_back(Pair("bogosize", (int64_t)stats.nBogoSize));
         ret.push_back(Pair("hash_serialized_2", stats.hashSerialized.GetHex()));
@@ -1598,7 +1598,7 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
         }
     }
 
-    if (fParticlMode)
+    if (fEfinMode)
         return obj;
     const Consensus::Params& consensusParams = Params().GetConsensus();
     CBlockIndex* tip = chainActive.Tip();

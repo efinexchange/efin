@@ -1,4 +1,4 @@
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,7 +11,7 @@
 #include <util.h>
 
 HDWalletTestingSetup::HDWalletTestingSetup(const std::string &chainName):
-    TestingSetup(chainName, true) // fParticlMode = true
+    TestingSetup(chainName, true) // fEfinMode = true
 {
     bitdb.MakeMock();
 
@@ -19,7 +19,7 @@ HDWalletTestingSetup::HDWalletTestingSetup(const std::string &chainName):
     std::unique_ptr<CWalletDBWrapper> dbw(new CWalletDBWrapper(&bitdb, "wallet_test_part.dat"));
     pwalletMain = MakeUnique<CHDWallet>(std::move(dbw));
     vpwallets.push_back(pwalletMain.get());
-    fParticlWallet = true;
+    fEfinWallet = true;
     pwalletMain->LoadWallet(fFirstRun);
     RegisterValidationInterface(pwalletMain.get());
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2017 The Particl Core developers
+# Copyright (c) 2017 The Efin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,7 +18,7 @@ def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
     b = decimal.Decimal(b)
     return abs(a-b) <= max(decimal.Decimal(rel_tol) * decimal.Decimal(max(abs(a), abs(b))), abs_tol)
 
-class ParticlTestFramework(BitcoinTestFramework):
+class EfinTestFramework(BitcoinTestFramework):
     def __init__(self):
         super().__init__()
 

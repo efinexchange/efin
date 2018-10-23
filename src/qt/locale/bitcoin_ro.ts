@@ -286,8 +286,8 @@
         <translation>Click pentru a permite, din nou, activitate rețelei.</translation>
     </message>
     <message>
-        <source>Send coins to a Particl address</source>
-        <translation>Trimite monedele către o adresă Particl</translation>
+        <source>Send coins to a Efin address</source>
+        <translation>Trimite monedele către o adresă Efin</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -310,8 +310,8 @@
         <translation>&amp;Verifică mesajul...</translation>
     </message>
     <message>
-        <source>Particl</source>
-        <translation>Particl</translation>
+        <source>Efin</source>
+        <translation>Efin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -338,12 +338,12 @@
         <translation>Criptează cheile private care aparțin portofelului tău.</translation>
     </message>
     <message>
-        <source>Sign messages with your Particl addresses to prove you own them</source>
-        <translation>Semnează mesajele cu adresa ta de Particl pentru a face dovada că îți aparțin.</translation>
+        <source>Sign messages with your Efin addresses to prove you own them</source>
+        <translation>Semnează mesajele cu adresa ta de Efin pentru a face dovada că îți aparțin.</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Particl addresses</source>
-        <translation>Verifică mesajele cu scopul de a asigura faptul că au fost semnate cu adresa de Particl specificată.</translation>
+        <source>Verify messages to ensure they were signed with specified Efin addresses</source>
+        <translation>Verifică mesajele cu scopul de a asigura faptul că au fost semnate cu adresa de Efin specificată.</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -1136,8 +1136,8 @@
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>Particl Core</source>
-        <translation>Particl Core</translation>
+        <source>Efin Core</source>
+        <translation>Efin Core</translation>
     </message>
     <message>
         <source>Upgrading UTXO database</source>

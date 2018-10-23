@@ -388,7 +388,7 @@
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>Particl Core</source>
+        <source>Efin Core</source>
         <translation>బిట్కోయిన్ కోర్</translation>
     </message>
     <message>

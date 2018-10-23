@@ -1,9 +1,9 @@
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_WALLET_HDWALLET_H
-#define PARTICL_WALLET_HDWALLET_H
+#ifndef EFIN_WALLET_HDWALLET_H
+#define EFIN_WALLET_HDWALLET_H
 
 #include <wallet/wallet.h>
 #include <wallet/hdwalletdb.h>
@@ -779,5 +779,5 @@ bool IsHDWallet(const CKeyStore *win);
 CHDWallet *GetHDWallet(CKeyStore *win);
 const CHDWallet *GetHDWallet(const CKeyStore *win);
 
-#endif // PARTICL_WALLET_HDWALLET_H
+#endif // EFIN_WALLET_HDWALLET_H
 

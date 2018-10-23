@@ -1,4 +1,4 @@
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,7 +18,7 @@
 
 #include <boost/atomic.hpp>
 
-// test_particl --log_level=all  --run_test=stealth_tests
+// test_efin --log_level=all  --run_test=stealth_tests
 
 BOOST_FIXTURE_TEST_SUITE(stealth_tests, BasicTestingSetup)
 

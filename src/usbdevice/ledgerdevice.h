@@ -1,9 +1,9 @@
-// Copyright (c) 2018 The Particl Core developers
+// Copyright (c) 2018 The Efin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_LEDGERDEVICE_H
-#define PARTICL_LEDGERDEVICE_H
+#ifndef EFIN_LEDGERDEVICE_H
+#define EFIN_LEDGERDEVICE_H
 
 #include <usbdevice/usbdevice.h>
 
@@ -31,4 +31,4 @@ public:
         std::vector<uint8_t> &vchSig, std::string &sError) override;
 };
 
-#endif // PARTICL_LEDGERDEVICE_H
+#endif // EFIN_LEDGERDEVICE_H

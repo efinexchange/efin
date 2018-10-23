@@ -1,4 +1,4 @@
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -16,7 +16,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_FIXTURE_TEST_SUITE(particlchain_tests, BasicTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(efinchain_tests, BasicTestingSetup)
 
 
 BOOST_AUTO_TEST_CASE(oldversion_test)
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(signature_test)
     CKeyID id = pk.GetID();
 
     CMutableTransaction txn;
-    txn.nVersion = PARTICL_TXN_VERSION;
+    txn.nVersion = EFIN_TXN_VERSION;
     txn.nLockTime = 0;
 
     int nBlockHeight = 22;
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(signature_test)
     txn.vpout.push_back(out1);
 
     CMutableTransaction txn2;
-    txn2.nVersion = PARTICL_TXN_VERSION;
+    txn2.nVersion = EFIN_TXN_VERSION;
     txn2.vin.push_back(CTxIn(txn.GetHash(), 0));
 
     std::vector<uint8_t> vchAmount(8);
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(signature_test)
     BOOST_CHECK(serror == SCRIPT_ERR_OK);
 }
 
-BOOST_AUTO_TEST_CASE(particlchain_test)
+BOOST_AUTO_TEST_CASE(efinchain_test)
 {
     SeedInsecureRand();
     CBasicKeyStore keystore;
@@ -93,11 +93,11 @@ BOOST_AUTO_TEST_CASE(particlchain_test)
     CScript script = CScript() << OP_DUP << OP_HASH160 << ToByteVector(id) << OP_EQUALVERIFY << OP_CHECKSIG;
 
     CBlock blk;
-    blk.nVersion = PARTICL_BLOCK_VERSION;
+    blk.nVersion = EFIN_BLOCK_VERSION;
     blk.nTime = 1487406900;
 
     CMutableTransaction txn;
-    txn.nVersion = PARTICL_TXN_VERSION;
+    txn.nVersion = EFIN_TXN_VERSION;
     txn.SetType(TXN_COINBASE);
     txn.nLockTime = 0;
     OUTPUT_PTR<CTxOutStandard> out0 = MAKE_OUTPUT<CTxOutStandard>();
@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE(particlchain_test)
 
     CMutableTransaction txnSpend;
 
-    txnSpend.nVersion = PARTICL_BLOCK_VERSION;
+    txnSpend.nVersion = EFIN_BLOCK_VERSION;
 }
 
 BOOST_AUTO_TEST_CASE(opiscoinstake_test)
@@ -202,7 +202,7 @@ BOOST_AUTO_TEST_CASE(opiscoinstake_test)
     SignatureData sigdataA, sigdataB, sigdataC;
 
     CMutableTransaction txn;
-    txn.nVersion = PARTICL_TXN_VERSION;
+    txn.nVersion = EFIN_TXN_VERSION;
     txn.SetType(TXN_COINSTAKE);
     txn.nLockTime = 0;
 
@@ -236,7 +236,7 @@ BOOST_AUTO_TEST_CASE(opiscoinstake_test)
     BOOST_CHECK(VerifyScript(scriptSig, script, &sigdataA.scriptWitness, nFlags, TransactionSignatureChecker(&txnConst, 0, vchAmount), &serror));
 
 
-    txn.nVersion = PARTICL_TXN_VERSION;
+    txn.nVersion = EFIN_TXN_VERSION;
     txn.SetType(TXN_STANDARD);
     CTransaction txnConst2(txn);
     BOOST_CHECK(!txnConst2.IsCoinStake());

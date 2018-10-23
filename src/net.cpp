@@ -1512,7 +1512,7 @@ void ThreadMapPort()
             }
         }
 
-        std::string strDesc = "Particl " + FormatFullVersion();
+        std::string strDesc = "Efin " + FormatFullVersion();
 
         try {
             while (true) {

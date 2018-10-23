@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-# Copyright (c) 2018 The Particl Core developers
+# Copyright (c) 2018 The Efin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 # Test Decred atomic swap contracts
 
-from test_framework.test_particl import ParticlTestFramework
-from test_framework.test_particl import isclose
+from test_framework.test_efin import EfinTestFramework
+from test_framework.test_efin import isclose
 from test_framework.util import *
 from test_framework.script import *
 from test_framework.messages import sha256
@@ -212,7 +212,7 @@ def getIndexAtProperty(arr, name, value):
             continue
     return -1
 
-class AtomicSwapTest(ParticlTestFramework):
+class AtomicSwapTest(EfinTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 2

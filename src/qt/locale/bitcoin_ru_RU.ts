@@ -322,8 +322,8 @@
         <translation>&amp;Проверить сообщение...</translation>
     </message>
     <message>
-        <source>Particl</source>
-        <translation>Particl Core</translation>
+        <source>Efin</source>
+        <translation>Efin Core</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -924,8 +924,8 @@
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>Particl Core</source>
-        <translation>Particl Core</translation>
+        <source>Efin Core</source>
+        <translation>Efin Core</translation>
     </message>
     <message>
         <source>Whitelisted peers cannot be DoS banned and their transactions are always relayed, even if they are already in the mempool, useful e.g. for a gateway</source>

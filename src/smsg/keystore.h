@@ -1,9 +1,9 @@
-// Copyright (c) 2018 The Particl Core developers
+// Copyright (c) 2018 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_SMSG_KEYSTORE_H
-#define PARTICL_SMSG_KEYSTORE_H
+#ifndef EFIN_SMSG_KEYSTORE_H
+#define EFIN_SMSG_KEYSTORE_H
 
 #include <key.h>
 #include <pubkey.h>
@@ -61,4 +61,4 @@ public:
 
 } // namespace smsg
 
-#endif //PARTICL_SMSG_KEYSTORE_H
+#endif //EFIN_SMSG_KEYSTORE_H

@@ -1,4 +1,4 @@
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -23,7 +23,7 @@ MnemonicDialog::MnemonicDialog(QWidget *parent, WalletModel *wm) :
     ui(new Ui::MnemonicDialog)
 {
     ui->setupUi(this);
-    CHDWallet *phdw = wm->getParticlWallet();
+    CHDWallet *phdw = wm->getEfinWallet();
     if (!phdw)
         return;
 

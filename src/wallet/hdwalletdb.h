@@ -1,9 +1,9 @@
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_WALLET_HDWALLETDB_H
-#define PARTICL_WALLET_HDWALLETDB_H
+#ifndef EFIN_WALLET_HDWALLETDB_H
+#define EFIN_WALLET_HDWALLETDB_H
 
 #include <amount.h>
 #include <primitives/transaction.h>
@@ -424,4 +424,4 @@ public:
 
 //void ThreadFlushHDWalletDB();
 
-#endif // PARTICL_WALLET_HDWALLETDB_H
+#endif // EFIN_WALLET_HDWALLETDB_H

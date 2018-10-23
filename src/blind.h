@@ -1,9 +1,10 @@
 // Copyright (c) 2017 The Particl developers
+// Copyright (c) 2018 The Efin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_BLIND_H
-#define PARTICL_BLIND_H
+#ifndef EFIN_BLIND_H
+#define EFIN_BLIND_H
 
 #include <secp256k1.h>
 #include <inttypes.h>
@@ -20,4 +21,4 @@ int GetRangeProofInfo(const std::vector<uint8_t> &vRangeproof, int &rexp, int &r
 void ECC_Start_Blinding();
 void ECC_Stop_Blinding();
 
-#endif  // PARTICL_BLIND_H
+#endif  // EFIN_BLIND_H

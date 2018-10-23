@@ -469,7 +469,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
 
     if (coinControl()->nCoinType != OUTPUT_STANDARD)
     {
-        CHDWallet *phdw = model->getParticlWallet();
+        CHDWallet *phdw = model->getEfinWallet();
 
         for (const auto &op : vCoinControl)
         {

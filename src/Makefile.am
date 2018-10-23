@@ -23,27 +23,27 @@ BITCOIN_INCLUDES=-I$(builddir) $(BDB_CPPFLAGS) $(BOOST_CPPFLAGS) $(LEVELDB_CPPFL
 BITCOIN_INCLUDES += -I$(srcdir)/secp256k1/include
 BITCOIN_INCLUDES += $(UNIVALUE_CFLAGS)
 
-LIBPARTICL_SERVER=libparticl_server.a
-LIBPARTICL_COMMON=libparticl_common.a
-LIBPARTICL_CONSENSUS=libparticl_consensus.a
-LIBPARTICL_CLI=libparticl_cli.a
-LIBPARTICL_UTIL=libparticl_util.a
-LIBPARTICL_CRYPTO=crypto/libparticl_crypto.a
-LIBPARTICLQT=qt/libparticlqt.a
+LIBEFIN_SERVER=libefin_server.a
+LIBEFIN_COMMON=libefin_common.a
+LIBEFIN_CONSENSUS=libefin_consensus.a
+LIBEFIN_CLI=libefin_cli.a
+LIBEFIN_UTIL=libefin_util.a
+LIBEFIN_CRYPTO=crypto/libefin_crypto.a
+LIBEFINQT=qt/libefinqt.a
 LIBSECP256K1=secp256k1/libsecp256k1.la
-LIBPARTICL_SMSG=libparticl_smsg.a
+LIBEFIN_SMSG=libefin_smsg.a
 
 if ENABLE_ZMQ
-LIBPARTICL_ZMQ=libparticl_zmq.a
+LIBEFIN_ZMQ=libefin_zmq.a
 endif
 if BUILD_BITCOIN_LIBS
-LIBPARTICLCONSENSUS=libparticlconsensus.la
+LIBEFINCONSENSUS=libefinconsensus.la
 endif
 if ENABLE_WALLET
-LIBPARTICL_WALLET=libparticl_wallet.a
+LIBEFIN_WALLET=libefin_wallet.a
 endif
 if ENABLE_USBDEVICE
-LIBPARTICL_USBDEVICE=libparticl_usbdevice.a
+LIBEFIN_USBDEVICE=libefin_usbdevice.a
 endif
 
 $(LIBSECP256K1): $(wildcard secp256k1/src/*) $(wildcard secp256k1/include/*)
@@ -52,18 +52,18 @@ $(LIBSECP256K1): $(wildcard secp256k1/src/*) $(wildcard secp256k1/include/*)
 # Make is not made aware of per-object dependencies to avoid limiting building parallelization
 # But to build the less dependent modules first, we manually select their order here:
 EXTRA_LIBRARIES += \
-  $(LIBPARTICL_CRYPTO) \
-  $(LIBPARTICL_UTIL) \
-  $(LIBPARTICL_COMMON) \
-  $(LIBPARTICL_CONSENSUS) \
-  $(LIBPARTICL_SERVER) \
-  $(LIBPARTICL_CLI) \
-  $(LIBPARTICL_WALLET) \
-  $(LIBPARTICL_USBDEVICE) \
-  $(LIBPARTICL_ZMQ) \
-  $(LIBPARTICL_SMSG)
+  $(LIBEFIN_CRYPTO) \
+  $(LIBEFIN_UTIL) \
+  $(LIBEFIN_COMMON) \
+  $(LIBEFIN_CONSENSUS) \
+  $(LIBEFIN_SERVER) \
+  $(LIBEFIN_CLI) \
+  $(LIBEFIN_WALLET) \
+  $(LIBEFIN_USBDEVICE) \
+  $(LIBEFIN_ZMQ) \
+  $(LIBEFIN_SMSG)
 
-lib_LTLIBRARIES = $(LIBPARTICLCONSENSUS)
+lib_LTLIBRARIES = $(LIBEFINCONSENSUS)
 
 bin_PROGRAMS =
 noinst_PROGRAMS =
@@ -71,11 +71,11 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += particld
+  bin_PROGRAMS += efind
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += particl-cli particl-tx
+  bin_PROGRAMS += efin-cli efin-tx
 endif
 
 .PHONY: FORCE check-symbols check-security
@@ -221,12 +221,12 @@ obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
 	@$(top_srcdir)/share/genbuild.sh $(abs_top_builddir)/src/obj/build.h \
 	  $(abs_top_srcdir)
-libparticl_util_a-clientversion.$(OBJEXT): obj/build.h
+libefin_util_a-clientversion.$(OBJEXT): obj/build.h
 
 # server: shared between bitcoind and bitcoin-qt
-libparticl_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
-libparticl_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libparticl_server_a_SOURCES = \
+libefin_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
+libefin_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefin_server_a_SOURCES = \
   addrman.cpp \
   addrdb.cpp \
   addressindex.cpp \
@@ -274,19 +274,19 @@ libparticl_server_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 if ENABLE_ZMQ
-libparticl_zmq_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(ZMQ_CFLAGS)
-libparticl_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libparticl_zmq_a_SOURCES = \
+libefin_zmq_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(ZMQ_CFLAGS)
+libefin_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefin_zmq_a_SOURCES = \
   zmq/zmqabstractnotifier.cpp \
   zmq/zmqnotificationinterface.cpp \
   zmq/zmqpublishnotifier.cpp
 endif
 
 if ENABLE_USBDEVICE
-libparticl_usbdevice_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(AM_CPPFLAGS)
-libparticl_usbdevice_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libparticl_usbdevice_a_CFLAGS = -DHAVE_HIDAPI $(AM_CFLAGS)
-libparticl_usbdevice_a_SOURCES = \
+libefin_usbdevice_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(AM_CPPFLAGS)
+libefin_usbdevice_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefin_usbdevice_a_CFLAGS = -DHAVE_HIDAPI $(AM_CFLAGS)
+libefin_usbdevice_a_SOURCES = \
   usbdevice/ledger/btchipApdu.h \
   usbdevice/ledger/ledgerLayer.h \
   usbdevice/ledger/ledgerLayer.c \
@@ -302,9 +302,9 @@ endif
 
 # wallet: shared between bitcoind and bitcoin-qt, but only linked
 # when wallet enabled
-libparticl_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libparticl_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libparticl_wallet_a_SOURCES = \
+libefin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libefin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefin_wallet_a_SOURCES = \
   wallet/crypter.cpp \
   wallet/db.cpp \
   wallet/feebumper.cpp \
@@ -327,9 +327,9 @@ libparticl_wallet_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 # crypto primitives library
-crypto_libparticl_crypto_a_CPPFLAGS = $(AM_CPPFLAGS)
-crypto_libparticl_crypto_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-crypto_libparticl_crypto_a_SOURCES = \
+crypto_libefin_crypto_a_CPPFLAGS = $(AM_CPPFLAGS)
+crypto_libefin_crypto_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+crypto_libefin_crypto_a_SOURCES = \
   crypto/aes.cpp \
   crypto/aes.h \
   crypto/chacha20.h \
@@ -349,13 +349,13 @@ crypto_libparticl_crypto_a_SOURCES = \
   crypto/sha512.h
 
 if USE_ASM
-crypto_libparticl_crypto_a_SOURCES += crypto/sha256_sse4.cpp
+crypto_libefin_crypto_a_SOURCES += crypto/sha256_sse4.cpp
 endif
 
 # consensus: shared between all executables that validate any consensus rules.
-libparticl_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libparticl_consensus_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libparticl_consensus_a_SOURCES = \
+libefin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libefin_consensus_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefin_consensus_a_SOURCES = \
   amount.h \
   arith_uint256.cpp \
   arith_uint256.h \
@@ -388,9 +388,9 @@ libparticl_consensus_a_SOURCES = \
   version.h
 
 # common: shared between bitcoind, and bitcoin-qt and non-server tools
-libparticl_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libparticl_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libparticl_common_a_SOURCES = \
+libefin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libefin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefin_common_a_SOURCES = \
   base58.cpp \
   bech32.cpp \
   chainparams.cpp \
@@ -422,9 +422,9 @@ libparticl_common_a_SOURCES = \
 # util: shared between all executables.
 # This library *must* be included to make sure that the glibc
 # backward-compatibility objects and their sanity checks are linked.
-libparticl_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libparticl_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libparticl_util_a_SOURCES = \
+libefin_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libefin_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefin_util_a_SOURCES = \
   support/lockedpool.cpp \
   chainparamsbase.cpp \
   clientversion.cpp \
@@ -445,9 +445,9 @@ libparticl_util_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 
-libparticl_smsg_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libparticl_smsg_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libparticl_smsg_a_SOURCES = \
+libefin_smsg_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libefin_smsg_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefin_smsg_a_SOURCES = \
   lz4/lz4.h \
   lz4/lz4.c \
   xxhash/xxhash.h \
@@ -461,102 +461,102 @@ libparticl_smsg_a_SOURCES = \
 
 
 if GLIBC_BACK_COMPAT
-libparticl_util_a_SOURCES += compat/glibc_compat.cpp
+libefin_util_a_SOURCES += compat/glibc_compat.cpp
 endif
 
 # cli: shared between bitcoin-cli and bitcoin-qt
-libparticl_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libparticl_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libparticl_cli_a_SOURCES = \
+libefin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libefin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefin_cli_a_SOURCES = \
   rpc/client.cpp \
   $(BITCOIN_CORE_H)
 
 
-nodist_libparticl_util_a_SOURCES = $(srcdir)/obj/build.h
+nodist_libefin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # bitcoind binary #
-particld_SOURCES = bitcoind.cpp
-particld_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-particld_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-particld_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+efind_SOURCES = bitcoind.cpp
+efind_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+efind_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+efind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-particld_SOURCES += bitcoind-res.rc
+efind_SOURCES += bitcoind-res.rc
 endif
 
-particld_LDADD = \
-  $(LIBPARTICL_SERVER) \
-  $(LIBPARTICL_COMMON) \
+efind_LDADD = \
+  $(LIBEFIN_SERVER) \
+  $(LIBEFIN_COMMON) \
   $(LIBUNIVALUE) \
-  $(LIBPARTICL_UTIL) \
-  $(LIBPARTICL_WALLET) \
-  $(LIBPARTICL_ZMQ) \
-  $(LIBPARTICL_CONSENSUS) \
-  $(LIBPARTICL_CRYPTO) \
+  $(LIBEFIN_UTIL) \
+  $(LIBEFIN_WALLET) \
+  $(LIBEFIN_ZMQ) \
+  $(LIBEFIN_CONSENSUS) \
+  $(LIBEFIN_CRYPTO) \
   $(LIBLEVELDB) \
   $(LIBLEVELDB_SSE42) \
   $(LIBMEMENV) \
   $(LIBSECP256K1) \
-  $(LIBPARTICL_SMSG) \
-  $(LIBPARTICL_USBDEVICE)
+  $(LIBEFIN_SMSG) \
+  $(LIBEFIN_USBDEVICE)
 
-particld_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(USB_LIBS)
+efind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(USB_LIBS)
 
 # bitcoin-cli binary #
 #$(BITCOIN_CLI_NAME)_SOURCES = bitcoin-cli.cpp
-particl_cli_SOURCES = bitcoin-cli.cpp
-particl_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-particl_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-particl_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+efin_cli_SOURCES = bitcoin-cli.cpp
+efin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+efin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+efin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-particl_cli_SOURCES += bitcoin-cli-res.rc
+efin_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-particl_cli_LDADD = \
-  $(LIBPARTICL_CLI) \
+efin_cli_LDADD = \
+  $(LIBEFIN_CLI) \
   $(LIBUNIVALUE) \
-  $(LIBPARTICL_UTIL) \
-  $(LIBPARTICL_CRYPTO)
+  $(LIBEFIN_UTIL) \
+  $(LIBEFIN_CRYPTO)
 
-particl_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+efin_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
 # bitcoin-tx binary #
-particl_tx_SOURCES = bitcoin-tx.cpp
-particl_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-particl_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-particl_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+efin_tx_SOURCES = bitcoin-tx.cpp
+efin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+efin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+efin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-particl_tx_SOURCES += bitcoin-tx-res.rc
+efin_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
-particl_tx_LDADD = \
+efin_tx_LDADD = \
   $(LIBUNIVALUE) \
-  $(LIBPARTICL_COMMON) \
-  $(LIBPARTICL_UTIL) \
-  $(LIBPARTICL_CONSENSUS) \
-  $(LIBPARTICL_CRYPTO) \
+  $(LIBEFIN_COMMON) \
+  $(LIBEFIN_UTIL) \
+  $(LIBEFIN_CONSENSUS) \
+  $(LIBEFIN_CRYPTO) \
   $(LIBSECP256K1)
 
-particl_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+efin_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
 # bitcoinconsensus library #
 if BUILD_BITCOIN_LIBS
-include_HEADERS = script/particlconsensus.h
-libparticlconsensus_la_SOURCES = $(crypto_libparticl_crypto_a_SOURCES) $(libparticl_consensus_a_SOURCES)
+include_HEADERS = script/efinconsensus.h
+libefinconsensus_la_SOURCES = $(crypto_libefin_crypto_a_SOURCES) $(libefin_consensus_a_SOURCES)
 
 if GLIBC_BACK_COMPAT
-  libparticlconsensus_la_SOURCES += compat/glibc_compat.cpp
+  libefinconsensus_la_SOURCES += compat/glibc_compat.cpp
 endif
 
-libparticlconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
-libparticlconsensus_la_LIBADD = $(LIBSECP256K1) $(BOOST_LIBS)
-libparticlconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
-libparticlconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libefinconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
+libefinconsensus_la_LIBADD = $(LIBSECP256K1) $(BOOST_LIBS)
+libefinconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
+libefinconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 endif
 #

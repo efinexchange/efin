@@ -43,7 +43,7 @@ public:
         READWRITE(hashPrevBlock);
         READWRITE(hashMerkleRoot);
 
-        if (IsParticlVersion())
+        if (IsEfinVersion())
         {
             READWRITE(hashWitnessMerkleRoot);
         }
@@ -70,10 +70,10 @@ public:
 
     uint256 GetHash() const;
 
-    bool IsParticlVersion()
+    bool IsEfinVersion()
     {
         // NOTE: Be very careful matching the version here: qa tests can fail silently
-        return this->nVersion == PARTICL_BLOCK_VERSION;
+        return this->nVersion == EFIN_BLOCK_VERSION;
     }
 
     int64_t GetBlockTime() const
@@ -139,7 +139,7 @@ public:
         READWRITE(*(CBlockHeader*)this);
         READWRITE(vtx);
 
-        if (nVersion == PARTICL_BLOCK_VERSION)
+        if (nVersion == EFIN_BLOCK_VERSION)
             READWRITE(vchBlockSig);
     }
 

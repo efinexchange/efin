@@ -437,7 +437,7 @@ BOOST_FIXTURE_TEST_CASE(rescan, TestChain100Setup)
                       "timestamp %d. There was an error reading a block from time %d, which is after or within %d "
                       "seconds of key creation, and could contain transactions pertaining to the key. As a result, "
                       "transactions and coins using this key may not appear in the wallet. This error could be caused "
-                      "by pruning or data corruption (see particld log for details) and could be dealt with by "
+                      "by pruning or data corruption (see efind log for details) and could be dealt with by "
                       "downloading and rescanning the relevant blocks (see -reindex and -rescan "
                       "options).\"}},{\"success\":true}]",
                               0, oldTip->GetBlockTimeMax(), TIMESTAMP_WINDOW));
@@ -611,7 +611,7 @@ public:
         ::bitdb.MakeMock();
 
         gArgs.ForceSetArg("-legacymode", "1");
-        fParticlWallet = false;
+        fEfinWallet = false;
 
         g_address_type = OUTPUT_TYPE_DEFAULT;
         g_change_type = OUTPUT_TYPE_DEFAULT;

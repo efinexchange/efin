@@ -147,13 +147,13 @@ static bool SignStep(const BaseSignatureCreator& creator, const CScript& scriptP
         return (SignN(vSolutions, creator, scriptPubKey, ret, sigversion));
 
     case TX_WITNESS_V0_KEYHASH:
-        if (creator.IsParticlVersion())
+        if (creator.IsEfinVersion())
             return false;
         ret.push_back(vSolutions[0]);
         return true;
 
     case TX_WITNESS_V0_SCRIPTHASH:
-        if (creator.IsParticlVersion())
+        if (creator.IsEfinVersion())
             return false;
         CRIPEMD160().Write(&vSolutions[0][0], vSolutions[0].size()).Finalize(h160.begin());
         if (creator.KeyStore().GetCScript(h160, scriptRet)) {
@@ -193,7 +193,7 @@ bool ProduceSignature(const BaseSignatureCreator& creator, const CScript& fromPu
     CScript subscript;
     sigdata.scriptWitness.stack.clear();
 
-    bool fIsP2SH = creator.IsParticlVersion()
+    bool fIsP2SH = creator.IsEfinVersion()
         ? (whichType == TX_SCRIPTHASH || whichType == TX_SCRIPTHASH256 || whichType == TX_TIMELOCKED_SCRIPTHASH)
         : whichType == TX_SCRIPTHASH;
     if (solved && fIsP2SH)
@@ -204,13 +204,13 @@ bool ProduceSignature(const BaseSignatureCreator& creator, const CScript& fromPu
         script = subscript = CScript(result[0].begin(), result[0].end());
 
         solved = solved && SignStep(creator, script, result, whichType, SIGVERSION_BASE) && (whichType != TX_SCRIPTHASH
-            && (!creator.IsParticlVersion() || (whichType != TX_SCRIPTHASH256 && whichType == TX_TIMELOCKED_SCRIPTHASH)));
+            && (!creator.IsEfinVersion() || (whichType != TX_SCRIPTHASH256 && whichType == TX_TIMELOCKED_SCRIPTHASH)));
         P2SH = true;
     }
 
     if (solved && whichType == TX_WITNESS_V0_KEYHASH)
     {
-        if (creator.IsParticlVersion())
+        if (creator.IsEfinVersion())
             return false;
         CScript witnessscript;
         witnessscript << OP_DUP << OP_HASH160 << ToByteVector(result[0]) << OP_EQUALVERIFY << OP_CHECKSIG;
@@ -221,7 +221,7 @@ bool ProduceSignature(const BaseSignatureCreator& creator, const CScript& fromPu
     }
     else if (solved && whichType == TX_WITNESS_V0_SCRIPTHASH)
     {
-        if (creator.IsParticlVersion())
+        if (creator.IsEfinVersion())
             return false;
         CScript witnessscript(result[0].begin(), result[0].end());
         txnouttype subType;
@@ -235,7 +235,7 @@ bool ProduceSignature(const BaseSignatureCreator& creator, const CScript& fromPu
         result.push_back(std::vector<unsigned char>(subscript.begin(), subscript.end()));
     }
 
-    if (creator.IsParticlVersion())
+    if (creator.IsEfinVersion())
     {
         sigdata.scriptWitness.stack = result;
     } else
@@ -264,7 +264,7 @@ void UpdateTransaction(CMutableTransaction& tx, unsigned int nIn, const Signatur
 {
     assert(tx.vin.size() > nIn);
 
-    if (tx.IsParticlVersion())
+    if (tx.IsEfinVersion())
     {
         assert(data.scriptSig.empty());
     };
@@ -294,7 +294,7 @@ bool SignSignature(const CKeyStore &keystore, const CTransaction& txFrom, CMutab
 
     CScript scriptPubKey;
     std::vector<uint8_t> vchAmount;
-    if (txFrom.IsParticlVersion())
+    if (txFrom.IsEfinVersion())
     {
         if (!txFrom.vpout[txin.prevout.n]->PutValue(vchAmount))
             return false;
@@ -399,7 +399,7 @@ static Stacks CombineSignatures(const CScript& scriptPubKey, const BaseSignature
         Same for TX_WITNESS_V0_SCRIPTHASH and TX_SCRIPTHASH
     */
     txnouttype txHackType = txType;
-    if (checker.IsParticlVersion())
+    if (checker.IsEfinVersion())
     {
         if (txHackType == TX_PUBKEY || txHackType == TX_PUBKEYHASH || txHackType == TX_PUBKEYHASH256 || txHackType == TX_TIMELOCKED_PUBKEYHASH)
             txHackType = TX_WITNESS_V0_KEYHASH;
@@ -505,20 +505,20 @@ public:
 };
 const DummySignatureChecker dummyChecker;
 
-class DummySignatureCheckerParticl : public BaseSignatureChecker
+class DummySignatureCheckerEfin : public BaseSignatureChecker
 {
-// IsParticlVersion() must return true to skip stack evaluation
+// IsEfinVersion() must return true to skip stack evaluation
 public:
-    DummySignatureCheckerParticl() {}
+    DummySignatureCheckerEfin() {}
 
-    bool IsParticlVersion() const { return true; }
+    bool IsEfinVersion() const { return true; }
 
     bool CheckSig(const std::vector<unsigned char>& scriptSig, const std::vector<unsigned char>& vchPubKey, const CScript& scriptCode, SigVersion sigversion) const
     {
         return true;
     }
 };
-const DummySignatureCheckerParticl dummyCheckerParticl;
+const DummySignatureCheckerEfin dummyCheckerEfin;
 } // namespace
 
 const BaseSignatureChecker& DummySignatureCreator::Checker() const
@@ -526,9 +526,9 @@ const BaseSignatureChecker& DummySignatureCreator::Checker() const
     return dummyChecker;
 }
 
-const BaseSignatureChecker& DummySignatureCreatorParticl::Checker() const
+const BaseSignatureChecker& DummySignatureCreatorEfin::Checker() const
 {
-    return dummyCheckerParticl;
+    return dummyCheckerEfin;
 }
 
 bool DummySignatureCreator::CreateSig(std::vector<unsigned char>& vchSig, const CKeyID& keyid, const CScript& scriptCode, SigVersion sigversion) const

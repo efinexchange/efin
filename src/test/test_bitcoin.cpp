@@ -41,12 +41,12 @@ FastRandomContext insecure_rand_ctx(insecure_rand_seed);
 
 extern bool fPrintToConsole;
 extern void noui_connect();
-extern bool fParticlMode;
+extern bool fEfinMode;
 
 
-BasicTestingSetup::BasicTestingSetup(const std::string& chainName, bool fParticlModeIn)
+BasicTestingSetup::BasicTestingSetup(const std::string& chainName, bool fEfinModeIn)
 {
-    fParticlMode = fParticlModeIn;
+    fEfinMode = fEfinModeIn;
 
     SHA256AutoDetect();
     RandomInit();
@@ -59,7 +59,7 @@ BasicTestingSetup::BasicTestingSetup(const std::string& chainName, bool fParticl
     fCheckBlockIndex = true;
     SelectParams(chainName);
 
-    ResetParams(chainName, fParticlMode);
+    ResetParams(chainName, fEfinMode);
 
     noui_connect();
 }
@@ -69,7 +69,7 @@ BasicTestingSetup::~BasicTestingSetup()
     ECC_Stop();
 }
 
-TestingSetup::TestingSetup(const std::string& chainName, bool fParticlModeIn) : BasicTestingSetup(chainName, fParticlModeIn)
+TestingSetup::TestingSetup(const std::string& chainName, bool fEfinModeIn) : BasicTestingSetup(chainName, fEfinModeIn)
 {
     const CChainParams& chainparams = Params();
     // Ideally we'd move all the RPC tests to the functional testing framework
@@ -77,7 +77,7 @@ TestingSetup::TestingSetup(const std::string& chainName, bool fParticlModeIn) : 
 
     RegisterAllCoreRPCCommands(tableRPC);
     ClearDatadirCache();
-    pathTemp = fs::temp_directory_path() / strprintf("test_particl_%lu_%i", (unsigned long)GetTime(), (int)(InsecureRandRange(100000)));
+    pathTemp = fs::temp_directory_path() / strprintf("test_efin_%lu_%i", (unsigned long)GetTime(), (int)(InsecureRandRange(100000)));
     fs::create_directories(pathTemp);
     gArgs.ForceSetArg("-datadir", pathTemp.string());
 

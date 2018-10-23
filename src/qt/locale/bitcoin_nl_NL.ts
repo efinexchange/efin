@@ -362,8 +362,8 @@
         <translation>&amp;Bericht verifiëren</translation>
     </message>
     <message>
-        <source>Particl</source>
-        <translation>Particl</translation>
+        <source>Efin</source>
+        <translation>Efin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -390,12 +390,12 @@
         <translation>Versleutel de privé sleutels die bij je portemonnee horen</translation>
     </message>
     <message>
-        <source>Sign messages with your Particl addresses to prove you own them</source>
-        <translation>Signeer berichten met je Particl adres om te bewijzen dat ze van jou zijn</translation>
+        <source>Sign messages with your Efin addresses to prove you own them</source>
+        <translation>Signeer berichten met je Efin adres om te bewijzen dat ze van jou zijn</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Particl addresses</source>
-        <translation>Verifieer berichten om er zeker van te zijn dat ze met specifieke Particl adressen ondertekent zijn</translation>
+        <source>Verify messages to ensure they were signed with specified Efin addresses</source>
+        <translation>Verifieer berichten om er zeker van te zijn dat ze met specifieke Efin adressen ondertekent zijn</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -470,8 +470,8 @@
         <translation>Up to date</translation>
     </message>
     <message>
-        <source>Show the %1 help message to get a list with possible Particl command-line options</source>
-        <translation>Open het %1 help bericht om een lijst met Particl commando-regel opties te krijgen</translation>
+        <source>Show the %1 help message to get a list with possible Efin command-line options</source>
+        <translation>Open het %1 help bericht om een lijst met Efin commando-regel opties te krijgen</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -540,8 +540,8 @@
         <translation>Portemonnee is &lt;b&gt;versleuteld&lt;/b&gt; op dit moment &lt;b&gt;vergrendeld&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>A fatal error occurred. Particl can no longer continue safely and will quit.</source>
-        <translation>Een fatale error is voorgekomen. Particl kan niet langer veilig verder gaan en sluit daardoor af.</translation>
+        <source>A fatal error occurred. Efin can no longer continue safely and will quit.</source>
+        <translation>Een fatale error is voorgekomen. Efin kan niet langer veilig verder gaan en sluit daardoor af.</translation>
     </message>
 </context>
 <context>
@@ -691,8 +691,8 @@
 <context>
     <name>Intro</name>
     <message>
-        <source>Particl</source>
-        <translation>Particl</translation>
+        <source>Efin</source>
+        <translation>Efin</translation>
     </message>
     <message>
         <source>Error</source>

@@ -450,7 +450,7 @@ UniValue verifymessage(const JSONRPCRequest &request)
             "verifymessage \"address\" \"signature\" \"message\"\n"
             "\nVerify a signed message\n"
             "\nArguments:\n"
-            "1. \"particladdress\"    (string, required) The efin address to use for the signature.\n"
+            "1. \"efinaddress\"    (string, required) The efin address to use for the signature.\n"
             "2. \"signature\"       (string, required) The signature provided by the signer in base 64 encoding (see signmessage).\n"
             "3. \"message\"         (string, required) The message that was signed.\n"
             "\nResult:\n"
@@ -1361,7 +1361,7 @@ static UniValue getinfo_deprecated(const JSONRPCRequest& request)
         "- getblockchaininfo: blocks, difficulty, chain\n"
         "- getnetworkinfo: version, protocolversion, timeoffset, connections, proxy, relayfee, warnings\n"
         "- getwalletinfo: balance, keypoololdest, keypoolsize, paytxfee, unlocked_until, walletversion\n"
-        "\nparticl-cli has the option -getinfo to collect and format these in the old format."
+        "\nefin-cli has the option -getinfo to collect and format these in the old format."
     );
 }
 

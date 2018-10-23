@@ -13,7 +13,7 @@ bool CKeyStore::AddKey(const CKey &key) {
 
 void CBasicKeyStore::ImplicitlyLearnRelatedKeyScripts(const CPubKey& pubkey)
 {
-    if (fParticlMode)
+    if (fEfinMode)
         return;
     AssertLockHeld(cs_KeyStore);
     CKeyID key_id = pubkey.GetID();

@@ -89,7 +89,7 @@ CAmount WalletModel::getBalance(const CCoinControl *coinControl) const
 
 CAmount WalletModel::getAnonBalance(const CCoinControl *coinControl) const
 {
-    CHDWallet *phdw = getParticlWallet();
+    CHDWallet *phdw = getEfinWallet();
     if (!phdw)
         return 0;
     if (coinControl)
@@ -102,7 +102,7 @@ CAmount WalletModel::getAnonBalance(const CCoinControl *coinControl) const
 
 CAmount WalletModel::getBlindBalance(const CCoinControl *coinControl) const
 {
-    CHDWallet *phdw = getParticlWallet();
+    CHDWallet *phdw = getEfinWallet();
     if (!phdw)
         return 0;
     if (coinControl)
@@ -179,7 +179,7 @@ void WalletModel::pollBalanceChanged()
 
 void WalletModel::reserveBalanceChanged(CAmount nReserveBalanceNew)
 {
-    CHDWallet *phdw = getParticlWallet();
+    CHDWallet *phdw = getEfinWallet();
     if (phdw)
         phdw->SetReserveBalance(nReserveBalanceNew);
 };
@@ -211,9 +211,9 @@ void WalletModel::checkBalanceChanged()
     CAmount newWatchStakedBalance = 0;
 
     CHDWalletBalances bal;
-    if (fParticlWallet)
+    if (fEfinWallet)
     {
-        CHDWallet *pw = getParticlWallet();
+        CHDWallet *pw = getEfinWallet();
 
         pw->GetBalances(bal);
 
@@ -527,7 +527,7 @@ bool WalletModel::setWalletLocked(bool locked, const SecureString &passPhrase, b
     else
     {
         // Unlock
-        if (fParticlWallet)
+        if (fEfinWallet)
             ((CHDWallet*)wallet)->fUnlockForStakingOnly = stakingOnly;
         return wallet->Unlock(passPhrase);
     }
@@ -684,7 +684,7 @@ bool WalletModel::IsSpendable(const CTxDestination& dest) const
 
 bool WalletModel::ownAddress(const CTxDestination &dest) const
 {
-    CHDWallet *phdw = getParticlWallet();
+    CHDWallet *phdw = getEfinWallet();
     if (!phdw)
         return false;
     return phdw->HaveAddress(dest);
@@ -701,7 +701,7 @@ void WalletModel::getOutputs(const std::vector<COutPoint>& vOutpoints, std::vect
     LOCK2(cs_main, wallet->cs_wallet);
     for (const COutPoint& outpoint : vOutpoints)
     {
-        CHDWallet *phdw = getParticlWallet();
+        CHDWallet *phdw = getEfinWallet();
         if (phdw && phdw->mapTempWallet.count(outpoint.hash))
         {
             int nDepth = phdw->mapTempWallet[outpoint.hash].GetDepthInMainChain();
@@ -958,7 +958,7 @@ void WalletModel::lockWallet()
         LockWallet(wallet);
 };
 
-CHDWallet *WalletModel::getParticlWallet() const
+CHDWallet *WalletModel::getEfinWallet() const
 {
     CHDWallet *rv;
     if (!wallet || !(rv = dynamic_cast<CHDWallet*>(wallet)))

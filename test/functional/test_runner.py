@@ -165,14 +165,14 @@ EXTENDED_SCRIPTS = [
     'feature_rbf.py',
 ]
 
-PARTICL_SCRIPTS = [
+EFIN_SCRIPTS = [
     'p2p_part_fork.py',
     'feature_part_pos.py',
     'feature_part_extkey.py',
     'feature_part_stealth.py',
     'feature_part_blind.py',
     'feature_part_anon.py',
-    'wallet_part_particl.py',
+    'wallet_part_efin.py',
     'rpc_part_mnemonic.py',
     'feature_part_smsg.py',
     'feature_part_smsgpaid.py',
@@ -195,7 +195,7 @@ INSIGHT_SCRIPTS = [
 ]
 
 # Place EXTENDED_SCRIPTS first since it has the 3 longest running tests
-ALL_SCRIPTS = EXTENDED_SCRIPTS + BASE_SCRIPTS + PARTICL_SCRIPTS + INSIGHT_SCRIPTS
+ALL_SCRIPTS = EXTENDED_SCRIPTS + BASE_SCRIPTS + EFIN_SCRIPTS + INSIGHT_SCRIPTS
 
 NON_SCRIPTS = [
     # These are python files that live in the functional tests directory, but are not test scripts.
@@ -218,7 +218,7 @@ def main():
     parser.add_argument('--coverage', action='store_true', help='generate a basic coverage report for the RPC interface')
     parser.add_argument('--exclude', '-x', help='specify a comma-separated-list of scripts to exclude.')
     parser.add_argument('--extended', action='store_true', help='run the extended test suite in addition to the basic tests')
-    parser.add_argument('--particl', action='store_true', help='run only Particl specific tests')
+    parser.add_argument('--efin', action='store_true', help='run only Efin specific tests')
     parser.add_argument('--insight', action='store_true', help='run only Insight specific tests')
     parser.add_argument('--withstdout', action='store_true', help='print stdout when test passed also')
     parser.add_argument('--force', '-f', action='store_true', help='run tests even on platforms where they are disabled by default (e.g. windows).')
@@ -246,7 +246,7 @@ def main():
     logging.basicConfig(format='%(message)s', level=logging_level)
 
     # Create base test directory
-    tmpdir = "%s/particl_test_runner_%s" % (args.tmpdirprefix, datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
+    tmpdir = "%s/efin_test_runner_%s" % (args.tmpdirprefix, datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
     os.makedirs(tmpdir)
 
     logging.debug("Temporary test directory at %s" % tmpdir)
@@ -281,8 +281,8 @@ def main():
         # No individual tests have been specified.
         # Run all base tests, and optionally run extended tests.
         test_list = []
-        if args.particl:
-            test_list += PARTICL_SCRIPTS
+        if args.efin:
+            test_list += EFIN_SCRIPTS
         if args.insight:
             test_list += INSIGHT_SCRIPTS
 
@@ -319,13 +319,13 @@ def main():
     if not args.keepcache:
         shutil.rmtree("%s/test/cache" % config["environment"]["BUILDDIR"], ignore_errors=True)
 
-    run_tests(test_list, config["environment"]["SRCDIR"], config["environment"]["BUILDDIR"], config["environment"]["EXEEXT"], tmpdir, args.jobs, args.coverage, passon_args, args.combinedlogslen, create_cache=(True if not args.particl and not args.insight else False))
+    run_tests(test_list, config["environment"]["SRCDIR"], config["environment"]["BUILDDIR"], config["environment"]["EXEEXT"], tmpdir, args.jobs, args.coverage, passon_args, args.combinedlogslen, create_cache=(True if not args.efin and not args.insight else False))
 
 def run_tests(test_list, src_dir, build_dir, exeext, tmpdir, jobs=1, enable_coverage=False, args=[], combined_logs_len=0, create_cache=True):
     # Warn if bitcoind is already running (unix only)
     try:
-        if subprocess.check_output(["pidof", "particld"]) is not None:
-            print("%sWARNING!%s There is already a particld process running on this system. Tests may fail unexpectedly due to resource contention!" % (BOLD[1], BOLD[0]))
+        if subprocess.check_output(["pidof", "efind"]) is not None:
+            print("%sWARNING!%s There is already a efind process running on this system. Tests may fail unexpectedly due to resource contention!" % (BOLD[1], BOLD[0]))
     except (OSError, subprocess.SubprocessError):
         pass
 
@@ -336,8 +336,8 @@ def run_tests(test_list, src_dir, build_dir, exeext, tmpdir, jobs=1, enable_cove
 
     #Set env vars
     if "BITCOIND" not in os.environ:
-        os.environ["BITCOIND"] = build_dir + '/src/particld' + exeext
-        os.environ["BITCOINCLI"] = build_dir + '/src/particl-cli' + exeext
+        os.environ["BITCOIND"] = build_dir + '/src/efind' + exeext
+        os.environ["BITCOINCLI"] = build_dir + '/src/efin-cli' + exeext
 
     tests_dir = src_dir + '/test/functional/'
 

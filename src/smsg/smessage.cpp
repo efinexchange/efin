@@ -1,5 +1,5 @@
 // Copyright (c) 2014-2016 The ShadowCoin developers
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1708,7 +1708,7 @@ static bool ScanBlock(CSMSG &smsg, const CBlock &block, SecMsgDB &addrpkdb,
     {
         // Harvest public keys from coinstake txns
 
-        if (!tx->IsParticlVersion()) // skip legacy txns
+        if (!tx->IsEfinVersion()) // skip legacy txns
             continue;
 
         for (const auto &txin : tx->vin)
@@ -3616,7 +3616,7 @@ int CSMSG::FundMsg(SecureMessage &smsg, std::string &sError, bool fTestFee, CAmo
     if (0 != HashMsg(smsg, smsg.pPayload, smsg.nPayload-32, msgId))
         return errorN(SMSG_GENERAL_ERROR, sError, __func__, "Message hash failed.");
 
-    txFund.nVersion = PARTICL_TXN_VERSION;
+    txFund.nVersion = EFIN_TXN_VERSION;
 
     size_t nMsgBytes = SMSG_HDR_LEN + smsg.nPayload;
 

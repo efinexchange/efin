@@ -191,7 +191,7 @@ void Shutdown()
     /// for example if the data directory was found to be locked.
     /// Be sure that anything that writes files or flushes caches only does this if the respective
     /// module was initialized.
-    RenameThread("particl-shutoff");
+    RenameThread("efin-shutoff");
     mempool.AddTransactionsUpdated(1);
 
 
@@ -458,7 +458,7 @@ std::string HelpMessage(HelpMessageMode mode)
     strUsage += smsg::GetHelpString(showDebug);
 
 #ifdef ENABLE_WALLET
-    if (fParticlMode)
+    if (fEfinMode)
         strUsage += CHDWallet::GetWalletHelpString(showDebug);
     else
         strUsage += GetWalletHelpString(showDebug);
@@ -558,7 +558,7 @@ std::string HelpMessage(HelpMessageMode mode)
     strUsage += HelpMessageOpt("-rpcallowip=<ip>", _("Allow JSON-RPC connections from specified source. Valid for <ip> are a single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or a network/CIDR (e.g. 1.2.3.4/24). This option can be specified multiple times"));
     strUsage += HelpMessageOpt("-rpcserialversion", strprintf(_("Sets the serialization of raw transaction or block hex returned in non-verbose mode, non-segwit(0) or segwit(1) (default: %d)"), DEFAULT_RPC_SERIALIZE_VERSION));
     strUsage += HelpMessageOpt("-rpcthreads=<n>", strprintf(_("Set the number of threads to service RPC calls (default: %d)"), DEFAULT_HTTP_THREADS));
-    strUsage += HelpMessageOpt("-rpccorsdomain=<domain>", _("Allow JSON-RPC connections from specified domain (e.g. http://localhost:4200 or \"*\"). This needs to be set if you are using the Particl GUI in a browser."));
+    strUsage += HelpMessageOpt("-rpccorsdomain=<domain>", _("Allow JSON-RPC connections from specified domain (e.g. http://localhost:4200 or \"*\"). This needs to be set if you are using the Efin GUI in a browser."));
 
     strUsage += HelpMessageOpt("-displaylocaltime", _("Display human readable time strings in local timezone (default: false)"));
     strUsage += HelpMessageOpt("-displayutctime", _("Display human readable time strings in UTC (default: false)"));
@@ -573,8 +573,8 @@ std::string HelpMessage(HelpMessageMode mode)
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/particl/particl-core>";
-    const std::string URL_WEBSITE = "<https://particl.io/>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/efin/efin-core>";
+    const std::string URL_WEBSITE = "<https://efin.com/>";
 
     return CopyrightHolders(_("Copyright (C)")) + "\n" +
            "\n" +
@@ -678,7 +678,7 @@ void CleanupBlockRevFiles()
 void ThreadImport(std::vector<fs::path> vImportFiles)
 {
     const CChainParams& chainparams = Params();
-    RenameThread("particl-loadblk");
+    RenameThread("efin-loadblk");
 
     fBusyImporting = true;
     {
@@ -1000,9 +1000,9 @@ bool AppInitParameterInteraction()
 
     // ********************************************************* Step 3: parameter-to-internal-flags
 
-    fParticlMode = !gArgs.GetBoolArg("-legacymode", false); // qa tests
-    if (gArgs.GetBoolArg("-regtest", false) && !fParticlMode)
-        ResetParams(CBaseChainParams::REGTEST, fParticlMode);
+    fEfinMode = !gArgs.GetBoolArg("-legacymode", false); // qa tests
+    if (gArgs.GetBoolArg("-regtest", false) && !fEfinMode)
+        ResetParams(CBaseChainParams::REGTEST, fEfinMode);
 
     if (gArgs.IsArgSet("-debug")) {
         // Special-case: if -debug=0/-nodebug is set, turn off debugging messages
@@ -1734,7 +1734,7 @@ bool AppInitMain()
 
     // ********************************************************* Step 8: load wallet
 #ifdef ENABLE_WALLET
-    if (fParticlMode)
+    if (fEfinMode)
     {
         if (!CHDWallet::InitLoadWallet())
             return InitError(_("Load HD wallet failed. Exiting."));
@@ -1807,10 +1807,10 @@ bool AppInitMain()
     // ********************************************************* Step 10.1: start secure messaging
 #ifdef ENABLE_WALLET
     assert(vpwallets.size() > 0);
-    if (fParticlMode) // SMSG breaks functional tests with services flag, see version msg
+    if (fEfinMode) // SMSG breaks functional tests with services flag, see version msg
     smsgModule.Start(vpwallets[0], !gArgs.GetBoolArg("-smsg", true), gArgs.GetBoolArg("-smsgscanchain", false));
 #else
-    if (fParticlMode)
+    if (fEfinMode)
     smsgModule.Start(nullptr, !gArgs.GetBoolArg("-smsg", true), gArgs.GetBoolArg("-smsgscanchain", false));
 #endif
 
@@ -1896,7 +1896,7 @@ bool AppInitMain()
 
     // ********************************************************* Step 11.1: start staking
     #ifdef ENABLE_WALLET
-    if (fParticlWallet)
+    if (fEfinWallet)
     {
         nMinStakeInterval = gArgs.GetArg("-minstakeinterval", 0);
         nMinerSleep = gArgs.GetArg("-minersleep", 500);

@@ -104,7 +104,7 @@ bool CDBEnv::Open(const fs::path& pathIn, bool retry)
 
     strPath = pathIn.string();
     if (!LockDirectory(pathIn, ".walletlock")) {
-        LogPrintf("Cannot obtain a lock on wallet directory %s. Another instance of particl may be using it.\n", strPath);
+        LogPrintf("Cannot obtain a lock on wallet directory %s. Another instance of efin may be using it.\n", strPath);
         return false;
     }
 
@@ -267,7 +267,7 @@ bool CDB::Recover(const std::string& filename, void *callbackDataIn, bool (*reco
             if (!(*recoverKVcallback)(callbackDataIn, ssKey, ssValue))
                 continue;
 
-            if (fParticlMode)
+            if (fEfinMode)
             {
                 Dbt datKey(&row.first[0], row.first.size());
                 Dbt datValue(ssValue.data(), ssValue.size());

@@ -21,7 +21,7 @@
   #elif defined(HAVE_FUNC_ATTRIBUTE_VISIBILITY)
     #define EXPORT_SYMBOL __attribute__ ((visibility ("default")))
   #endif
-#elif defined(MSC_VER) && !defined(STATIC_LIBPARTICLCONSENSUS)
+#elif defined(MSC_VER) && !defined(STATIC_LIBEFINCONSENSUS)
   #define EXPORT_SYMBOL __declspec(dllimport)
 #endif
 

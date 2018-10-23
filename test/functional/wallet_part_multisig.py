@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-# Copyright (c) 2017 The Particl Core developers
+# Copyright (c) 2017 The Efin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.test_particl import ParticlTestFramework
-from test_framework.test_particl import isclose
+from test_framework.test_efin import EfinTestFramework
+from test_framework.test_efin import isclose
 from test_framework.util import *
 
-class MultiSigTest(ParticlTestFramework):
+class MultiSigTest(EfinTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 3

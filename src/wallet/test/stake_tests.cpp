@@ -1,4 +1,4 @@
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -33,7 +33,7 @@ extern bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockInd
 
 struct StakeTestingSetup: public TestingSetup {
     StakeTestingSetup(const std::string& chainName = CBaseChainParams::REGTEST):
-        TestingSetup(chainName, true) // fParticlMode = true
+        TestingSetup(chainName, true) // fEfinMode = true
     {
         bitdb.MakeMock();
 
@@ -41,7 +41,7 @@ struct StakeTestingSetup: public TestingSetup {
         std::unique_ptr<CWalletDBWrapper> dbw(new CWalletDBWrapper(&bitdb, "wallet_test_part.dat"));
         pwalletMain = MakeUnique<CHDWallet>(std::move(dbw));
         vpwallets.push_back(pwalletMain.get());
-        fParticlWallet = true;
+        fEfinWallet = true;
         pwalletMain->LoadWallet(fFirstRun);
         RegisterValidationInterface(pwalletMain.get());
 

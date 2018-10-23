@@ -253,7 +253,7 @@ UniValue getrawtransaction(const JSONRPCRequest& request)
     uint256 hash = ParseHashV(request.params[0], "parameter 1");
     CBlockIndex* blockindex = nullptr;
 
-    if (!fParticlMode && hash == Params().GenesisBlock().hashMerkleRoot) {
+    if (!fEfinMode && hash == Params().GenesisBlock().hashMerkleRoot) {
         // Special exception for the genesis block coinbase transaction
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "The genesis block coinbase is not considered an ordinary transaction and cannot be retrieved");
     }
@@ -490,7 +490,7 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
     UniValue sendTo = request.params[1].get_obj();
 
     CMutableTransaction rawTx;
-    rawTx.nVersion = fParticlMode ? PARTICL_TXN_VERSION : BTC_TXN_VERSION;
+    rawTx.nVersion = fEfinMode ? EFIN_TXN_VERSION : BTC_TXN_VERSION;
 
 
     if (!request.params[2].isNull()) {
@@ -547,7 +547,7 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
         if (name_ == "data") {
             std::vector<unsigned char> data = ParseHexV(sendTo[name_].getValStr(),"Data");
 
-            if (fParticlMode)
+            if (fEfinMode)
             {
                 std::shared_ptr<CTxOutData> out = MAKE_OUTPUT<CTxOutData>();
                 out->vData = data;
@@ -560,7 +560,7 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
         } else {
             CTxDestination destination = DecodeDestination(name_);
             if (!IsValidDestination(destination)) {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Particl address: ") + name_);
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Efin address: ") + name_);
             }
 
             if (!destinations.insert(destination).second) {
@@ -570,7 +570,7 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
             CScript scriptPubKey = GetScriptForDestination(destination);
             CAmount nAmount = AmountFromValue(sendTo[name_]);
 
-            if (fParticlMode)
+            if (fEfinMode)
             {
                 std::shared_ptr<CTxOutStandard> out = MAKE_OUTPUT<CTxOutStandard>();
                 out->nValue = nAmount;

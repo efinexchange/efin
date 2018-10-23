@@ -138,7 +138,7 @@
         <translation>Промени &amp;лозинку...</translation>
     </message>
     <message>
-        <source>Send coins to a Particl address</source>
+        <source>Send coins to a Efin address</source>
         <translation>Пошаљите новац на bitcoin адресу</translation>
     </message>
     <message>

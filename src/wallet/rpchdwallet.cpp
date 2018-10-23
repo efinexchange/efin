@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018 The Particl Core developers
+// Copyright (c) 2017-2018 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -81,7 +81,7 @@ int ExtractBip32InfoV(const std::vector<uint8_t> &vchKey, UniValue &keyInfo, std
     CChainParams::Base58Type typePk = CChainParams::EXT_PUBLIC_KEY;
     if (memcmp(&vchKey[0], &Params().Base58Prefix(CChainParams::EXT_SECRET_KEY)[0], 4) == 0)
     {
-        keyInfo.pushKV("type", "Particl extended secret key");
+        keyInfo.pushKV("type", "Efin extended secret key");
     } else
     if (memcmp(&vchKey[0], &Params().Base58Prefix(CChainParams::EXT_SECRET_KEY_BTC)[0], 4) == 0)
     {
@@ -126,7 +126,7 @@ int ExtractBip32InfoP(const std::vector<uint8_t> &vchKey, UniValue &keyInfo, std
 
     if (memcmp(&vchKey[0], &Params().Base58Prefix(CChainParams::EXT_PUBLIC_KEY)[0], 4) == 0)
     {
-        keyInfo.pushKV("type", "Particl extended public key");
+        keyInfo.pushKV("type", "Efin extended public key");
     } else
     if (memcmp(&vchKey[0], &Params().Base58Prefix(CChainParams::EXT_PUBLIC_KEY_BTC)[0], 4) == 0)
     {
@@ -1771,8 +1771,8 @@ UniValue extkeyaltversion(const JSONRPCRequest &request)
         throw std::runtime_error(
             "extkeyaltversion \"ext_key\"\n"
             "Returns the provided ext_key encoded with alternate version bytes.\n"
-            "If the provided ext_key has a Bitcoin prefix the output will be encoded with a Particl prefix.\n"
-            "If the provided ext_key has a Particl prefix the output will be encoded with a Bitcoin prefix.");
+            "If the provided ext_key has a Bitcoin prefix the output will be encoded with a Efin prefix.\n"
+            "If the provided ext_key has a Efin prefix the output will be encoded with a Bitcoin prefix.");
 
     ObserveSafeMode();
 
@@ -1808,7 +1808,7 @@ UniValue getnewextaddress(const JSONRPCRequest &request)
     if (request.fHelp || request.params.size() > 4)
         throw std::runtime_error(
             "getnewextaddress ( \"label\" childNo bech32 hardened )\n"
-            "Returns a new Particl ext address for receiving payments.\n"
+            "Returns a new Efin ext address for receiving payments.\n"
             + HelpRequiringPassphrase(pwallet) +
             "\nArguments:\n"
             "1. \"label\"             (string, optional) If specified the key is added to the address book.\n"
@@ -1871,7 +1871,7 @@ UniValue getnewstealthaddress(const JSONRPCRequest &request)
     if (request.fHelp || request.params.size() > 5)
         throw std::runtime_error(
             "getnewstealthaddress ( \"label\" num_prefix_bits prefix_num bech32 makeV2 )\n"
-            "Returns a new Particl stealth address for receiving payments."
+            "Returns a new Efin stealth address for receiving payments."
             + HelpRequiringPassphrase(pwallet) +
             "\nArguments:\n"
             "1. \"label\"             (string, optional) If specified the key is added to the address book.\n"
@@ -3726,7 +3726,7 @@ UniValue manageaddressbook(const JSONRPCRequest &request)
     CBitcoinAddress address(sAddress);
 
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_PARAMETER, _("Invalid Particl address."));
+        throw JSONRPCError(RPC_INVALID_PARAMETER, _("Invalid Efin address."));
 
     CTxDestination dest = address.Get();
 
@@ -4157,7 +4157,7 @@ UniValue listunspentanon(const JSONRPCRequest &request)
             const UniValue& input = inputs[idx];
             CBitcoinAddress address(input.get_str());
             if (!address.IsValidStealthAddress())
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Particl stealth address: ")+input.get_str());
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Efin stealth address: ")+input.get_str());
             if (setAddress.count(address))
                 throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ")+input.get_str());
            setAddress.insert(address);
@@ -4383,7 +4383,7 @@ UniValue listunspentblind(const JSONRPCRequest &request)
             const UniValue& input = inputs[idx];
             CBitcoinAddress address(input.get_str());
             if (!address.IsValidStealthAddress())
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Particl stealth address: ")+input.get_str());
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Efin stealth address: ")+input.get_str());
             if (setAddress.count(address))
                 throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ")+input.get_str());
            setAddress.insert(address);
@@ -4544,10 +4544,10 @@ static UniValue SendToInner(const JSONRPCRequest &request, OutputTypes typeIn, O
 
             if (typeOut == OUTPUT_RINGCT
                 && !address.IsValidStealthAddress())
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Particl stealth address");
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Efin stealth address");
 
             if (!obj.exists("script") && !address.IsValid())
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Particl address");
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Efin address");
 
             if (obj.exists("amount"))
                 nAmount = AmountFromValue(obj["amount"]);
@@ -4596,10 +4596,10 @@ static UniValue SendToInner(const JSONRPCRequest &request, OutputTypes typeIn, O
 
         if (typeOut == OUTPUT_RINGCT
             && !address.IsValidStealthAddress())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Particl stealth address");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Efin stealth address");
 
         if (!address.IsValid())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Particl address");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Efin address");
 
         CAmount nAmount = AmountFromValue(request.params[1]);
         if (nAmount <= 0)

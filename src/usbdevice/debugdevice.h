@@ -1,9 +1,9 @@
-// Copyright (c) 2018 The Particl Core developers
+// Copyright (c) 2018 The Efin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_DEBUGDEVICE_H
-#define PARTICL_DEBUGDEVICE_H
+#ifndef EFIN_DEBUGDEVICE_H
+#define EFIN_DEBUGDEVICE_H
 
 #include <usbdevice/usbdevice.h>
 #include <key/extkey.h>
@@ -35,4 +35,4 @@ public:
 };
 
 
-#endif // PARTICL_DEBUGDEVICE_H
+#endif // EFIN_DEBUGDEVICE_H

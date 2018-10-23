@@ -550,7 +550,7 @@ public:
 
         if (i >= walletTx->tx->GetNumVOuts())
             throw std::out_of_range("The output index is out of range");
-        if (walletTx->tx->IsParticlVersion())
+        if (walletTx->tx->IsEfinVersion())
         {
             txoutBase = walletTx->tx->vpout[i];
         } else

@@ -18,7 +18,7 @@ WalletTestingSetup::WalletTestingSetup(const std::string& chainName):
     std::unique_ptr<CWalletDBWrapper> dbw(new CWalletDBWrapper(&bitdb, "wallet_test.dat"));
 
     gArgs.ForceSetArg("-legacymode", "1");
-    fParticlWallet = false;
+    fEfinWallet = false;
     pwalletMain = MakeUnique<CWallet>(std::move(dbw));
     pwalletMain->LoadWallet(fFirstRun);
     RegisterValidationInterface(pwalletMain.get());

@@ -518,7 +518,7 @@ bool CWalletDB::IsKeyType(const std::string& strType)
 {
     return (strType== "key" || strType == "wkey" ||
             strType == "mkey" || strType == "ckey")
-            || (fParticlMode &&
+            || (fEfinMode &&
                 (strType == "eacc" || strType == "ek32"
                 || strType == "eknm" || strType == "sxad" || strType == "espk"));
 }
@@ -754,7 +754,7 @@ void MaybeCompactWalletDB()
     }
 
     // Make this thread recognisable as the wallet flushing thread
-    RenameThread("particl-wallet");
+    RenameThread("efin-wallet");
 
     for (CWalletRef pwallet : vpwallets) {
         CWalletDBWrapper& dbh = pwallet->GetDBHandle();
@@ -798,7 +798,7 @@ bool CWalletDB::RecoverKeysOnlyFilter(void *callbackData, CDataStream &ssKey, CD
     std::string strType, strErr;
 
     bool fReadOK;
-    if (fParticlMode)
+    if (fEfinMode)
     {
         try {
             ssKey >> strType;

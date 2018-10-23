@@ -1,9 +1,9 @@
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_QT_MNEMONICDIALOG_H
-#define PARTICL_QT_MNEMONICDIALOG_H
+#ifndef EFIN_QT_MNEMONICDIALOG_H
+#define EFIN_QT_MNEMONICDIALOG_H
 
 #include <QDialog>
 
@@ -36,4 +36,4 @@ private:
     Ui::MnemonicDialog *ui;
 };
 
-#endif // PARTICL_QT_MNEMONICDIALOG_H
+#endif // EFIN_QT_MNEMONICDIALOG_H

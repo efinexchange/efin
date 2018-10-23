@@ -1,9 +1,10 @@
 // Copyright (c) 2017 The Particl developers
+// Copyright (c) 2018 The Efin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_ANON_H
-#define PARTICL_ANON_H
+#ifndef EFIN_ANON_H
+#define EFIN_ANON_H
 
 #include <inttypes.h>
 
@@ -29,4 +30,4 @@ bool AllAnonOutputsUnknown(const CTransaction &tx, CValidationState &state);
 
 bool RollBackRCTIndex(int64_t nLastValidRCTOutput, std::set<CCmpPubKey> &setKi);
 
-#endif  // PARTICL_ANON_H
+#endif  // EFIN_ANON_H

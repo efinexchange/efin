@@ -202,7 +202,7 @@ UniValue getnewaddress(const JSONRPCRequest& request)
     if (request.fHelp || request.params.size() > 4)
         throw std::runtime_error(
             "getnewaddress ( \"account\" bech32 hardened 256bit )\n"
-            "\nReturns a new Particl address for receiving payments, key is saved in wallet.\n"
+            "\nReturns a new Efin address for receiving payments, key is saved in wallet.\n"
             "If 'account' is specified (DEPRECATED), it is added to the address book \n"
             "so payments received with the address will be credited to 'account'.\n"
             "\nArguments:\n"
@@ -322,7 +322,7 @@ UniValue getaccountaddress(const JSONRPCRequest& request)
     if (request.fHelp || request.params.size() != 1)
         throw std::runtime_error(
             "getaccountaddress \"account\"\n"
-            "\nDEPRECATED. Returns the current Particl address for receiving payments to this account.\n"
+            "\nDEPRECATED. Returns the current Efin address for receiving payments to this account.\n"
             "\nArguments:\n"
             "1. \"account\"       (string, required) The account name for the address. It can also be set to the empty string \"\" to represent the default account. The account does not need to exist, it will be created and a new address created  if there is no account by the given name.\n"
             "\nResult:\n"
@@ -356,7 +356,7 @@ UniValue getrawchangeaddress(const JSONRPCRequest& request)
     if (request.fHelp || request.params.size() > 1)
         throw std::runtime_error(
             "getrawchangeaddress ( \"address_type\" )\n"
-            "\nReturns a new Particl address, for receiving change.\n"
+            "\nReturns a new Efin address, for receiving change.\n"
             "This is for use with raw transactions, NOT normal use.\n"
             "\nArguments:\n"
             "1. \"address_type\"           (string, optional) The address type to use. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\". Default is set by -changetype.\n"
@@ -430,7 +430,7 @@ UniValue setaccount(const JSONRPCRequest& request)
 
     CTxDestination dest = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(dest)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Particl address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Efin address");
     }
 
     std::string strAccount;
@@ -479,7 +479,7 @@ UniValue getaccount(const JSONRPCRequest& request)
 
     CTxDestination dest = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(dest)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Particl address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Efin address");
     }
 
     std::string strAccount;
@@ -884,7 +884,7 @@ UniValue getreceivedbyaddress(const JSONRPCRequest& request)
     // Bitcoin address
     CTxDestination dest = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(dest)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Particl address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Efin address");
     }
     CScript scriptPubKey = GetScriptForDestination(dest);
     if (!IsMine(*pwallet, scriptPubKey)) {
@@ -901,10 +901,10 @@ UniValue getreceivedbyaddress(const JSONRPCRequest& request)
     for (const std::pair<uint256, CWalletTx>& pairWtx : pwallet->mapWallet) {
         const CWalletTx& wtx = pairWtx.second;
 
-        if ((!fParticlWallet && wtx.IsCoinBase()) || !CheckFinalTx(*wtx.tx))
+        if ((!fEfinWallet && wtx.IsCoinBase()) || !CheckFinalTx(*wtx.tx))
             continue;
 
-        if (fParticlWallet)
+        if (fEfinWallet)
         {
             for (auto &txout : wtx.tx->vpout)
             {
@@ -974,10 +974,10 @@ UniValue getreceivedbyaccount(const JSONRPCRequest& request)
     CAmount nAmount = 0;
     for (const std::pair<uint256, CWalletTx>& pairWtx : pwallet->mapWallet) {
         const CWalletTx& wtx = pairWtx.second;
-        if ((!fParticlWallet && wtx.IsCoinBase()) || !CheckFinalTx(*wtx.tx))
+        if ((!fEfinWallet && wtx.IsCoinBase()) || !CheckFinalTx(*wtx.tx))
             continue;
 
-        if (fParticlWallet)
+        if (fEfinWallet)
         {
             for (auto &txout : wtx.tx->vpout)
             {
@@ -1404,7 +1404,7 @@ UniValue sendmany(const JSONRPCRequest& request)
     for (const std::string& name_ : keys) {
         CTxDestination dest = DecodeDestination(name_);
         if (!IsValidDestination(dest)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Particl address: ") + name_);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Efin address: ") + name_);
         }
 
         if (destinations.count(dest)) {
@@ -1465,7 +1465,7 @@ UniValue addmultisigaddress(const JSONRPCRequest& request)
     {
         std::string msg = "addmultisigaddress nrequired [\"key\",...] ( \"account\", bech32, 256bit)\n"
             "\nAdd a nrequired-to-sign multisignature address to the wallet. Requires a new wallet backup.\n"
-            "Each key is a Particl address or hex-encoded public key.\n"
+            "Each key is a Efin address or hex-encoded public key.\n"
             "If 'account' is specified (DEPRECATED), assign address to that account.\n"
 
             "\nArguments:\n"
@@ -2002,7 +2002,7 @@ void ListTransactions(CWallet* const pwallet, const CWalletTx& wtx, const std::s
                 }
                 entry.push_back(Pair("account", account));
 
-                if (fParticlWallet
+                if (fEfinWallet
                     && r.destination.type() == typeid(CKeyID))
                 {
                     CStealthAddress sx;
@@ -2024,7 +2024,7 @@ void ListTransactions(CWallet* const pwallet, const CWalletTx& wtx, const std::s
                         entry.push_back(Pair("category", "immature"));
                     else
                     {
-                        if (fParticlMode)
+                        if (fEfinMode)
                             entry.push_back(Pair("category", "coinbase"));
                         else
                             entry.push_back(Pair("category", "generate"));
@@ -3164,8 +3164,8 @@ UniValue encryptwallet(const JSONRPCRequest& request)
     // slack space in .dat files; that is bad if the old data is
     // unencrypted private keys. So:
     StartShutdown();
-    //return "wallet encrypted; Particl server stopping, restart to run with encrypted wallet. The keypool has been flushed and a new HD seed was generated (if you are using HD). You need to make a new backup.";
-    return "wallet encrypted; Particl server stopping, restart to run with encrypted wallet. You need to make a new backup.";
+    //return "wallet encrypted; Efin server stopping, restart to run with encrypted wallet. The keypool has been flushed and a new HD seed was generated (if you are using HD). You need to make a new backup.";
+    return "wallet encrypted; Efin server stopping, restart to run with encrypted wallet. You need to make a new backup.";
 }
 
 UniValue lockunspent(const JSONRPCRequest& request)
@@ -3425,7 +3425,7 @@ UniValue getwalletinfo(const JSONRPCRequest& request)
     obj.push_back(Pair("walletname", pwallet->GetName()));
     obj.push_back(Pair("walletversion", pwallet->GetVersion()));
 
-    if (fParticlWallet)
+    if (fEfinWallet)
     {
         CHDWalletBalances bal;
         ((CHDWallet*)pwallet)->GetBalances(bal);
@@ -3461,7 +3461,7 @@ UniValue getwalletinfo(const JSONRPCRequest& request)
         obj.push_back(Pair("immature_balance",    ValueFromAmount(pwallet->GetImmatureBalance())));
     };
 
-    int nTxCount = (int)pwallet->mapWallet.size() + (fParticlWallet ? (int)((CHDWallet*)pwallet)->mapRecords.size() : 0);
+    int nTxCount = (int)pwallet->mapWallet.size() + (fEfinWallet ? (int)((CHDWallet*)pwallet)->mapRecords.size() : 0);
 
     obj.push_back(Pair("txcount",       (int)nTxCount));
 
@@ -3664,7 +3664,7 @@ UniValue listunspent(const JSONRPCRequest& request)
             const UniValue& input = inputs[idx];
             CTxDestination dest = DecodeDestination(input.get_str());
             if (!IsValidDestination(dest)) {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Particl address: ") + input.get_str());
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Efin address: ") + input.get_str());
             }
             if (!destinations.insert(dest).second) {
                 throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ") + input.get_str());
@@ -3730,7 +3730,7 @@ UniValue listunspent(const JSONRPCRequest& request)
         CTxDestination address;
         const CScript *scriptPubKey;
         bool fValidAddress;
-        if (fParticlWallet)
+        if (fEfinWallet)
         {
             scriptPubKey = out.tx->tx->vpout[out.i]->GetPScriptPubKey();
             nValue = out.tx->tx->vpout[out.i]->GetValue();

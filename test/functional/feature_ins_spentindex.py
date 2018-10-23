@@ -7,12 +7,12 @@
 # Test addressindex generation and fetching
 #
 
-from test_framework.test_particl import ParticlTestFramework
+from test_framework.test_efin import EfinTestFramework
 from test_framework.util import *
 from test_framework.script import *
 from test_framework.mininode import *
 
-class SpentIndexTest(ParticlTestFramework):
+class SpentIndexTest(EfinTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 4

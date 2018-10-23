@@ -1,4 +1,4 @@
-// Copyright (c) 2017 The Particl Core developers
+// Copyright (c) 2017 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE(smsg_test)
 {
 #ifdef ENABLE_WALLET
     SeedInsecureRand();
-    fParticlMode = true;
+    fEfinMode = true;
 
     const std::string sTestMessage =
         "A short test message 0123456789 !@#$%^&*()_+-=";

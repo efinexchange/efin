@@ -79,7 +79,7 @@ script:
     - mkdir build && cd build
     - ../configure --cache-file=config.cache $BITCOIN_CONFIG_ALL $BITCOIN_CONFIG || ( cat config.log && false)
     - make distdir VERSION=$HOST
-    - cd particl-$HOST
+    - cd efin-$HOST
     - ./configure --cache-file=../config.cache $BITCOIN_CONFIG_ALL $BITCOIN_CONFIG || ( cat config.log && false)
     - make $MAKEJOBS $GOAL || ( echo "Build failure. Verbose build follows." && make $GOAL V=1 ; false )
     - export LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/depends/$HOST/lib
@@ -88,12 +88,12 @@ script:
     - sudo cat /proc/sys/kernel/random/entropy_avail
     - if [ "$TRAVIS_EVENT_TYPE" = "cron" ]; then extended="--extended --exclude pruning,dbcrash"; fi
 #   - if [ "$RUN_TESTS" = "true" ]; then test/functional/test_runner.py --coverage --quiet ${extended}; fi
-    - if [ "$RUN_TESTS" = "true" ]; then test/functional/test_runner.py --combinedlogslen=4000 --coverage --quiet --particl --insight; fi
+    - if [ "$RUN_TESTS" = "true" ]; then test/functional/test_runner.py --combinedlogslen=4000 --coverage --quiet --efin --insight; fi
 
 after_success:
     - COMMIT=$(echo $TRAVIS_COMMIT | head -c 7)
-    - tar -cjf particl_$COMMIT.tar.bz2 -C $OUTDIR/bin/ .
-    - if [ -f particl_$COMMIT.tar.bz2 ]; then travis_retry curl --max-time 60 --upload particl_$COMMIT.tar.bz2 http://t.particl.io/particl_$COMMIT.tar.bz2; fi
+    - tar -cjf efin_$COMMIT.tar.bz2 -C $OUTDIR/bin/ .
+    - if [ -f efin_$COMMIT.tar.bz2 ]; then travis_retry curl --max-time 60 --upload efin_$COMMIT.tar.bz2 http://t.efin.com/efin_$COMMIT.tar.bz2; fi
 after_script:
     - echo $TRAVIS_COMMIT_RANGE
     - echo $TRAVIS_COMMIT_LOG

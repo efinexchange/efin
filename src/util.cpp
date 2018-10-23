@@ -83,12 +83,12 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-const char * const BITCOIN_CONF_FILENAME = "particl.conf";
-const char * const BITCOIN_PID_FILENAME = "particld.pid";
+const char * const BITCOIN_CONF_FILENAME = "efin.conf";
+const char * const BITCOIN_PID_FILENAME = "efind.pid";
 const char * const DEFAULT_DEBUGLOGFILE = "debug.log";
 
-bool fParticlMode = true;
-bool fParticlWallet = false;
+bool fEfinMode = true;
+bool fEfinWallet = false;
 ArgsManager gArgs;
 bool fPrintToConsole = false;
 bool fPrintToDebugLog = true;
@@ -781,7 +781,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(nullptr, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "particl";
+    const char* pszModule = "efin";
 #endif
     if (pex)
         return strprintf(
@@ -800,13 +800,13 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Particl
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Particl
-    // Mac: ~/Library/Application Support/Particl
-    // Unix: ~/.particl
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Efin
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Efin
+    // Mac: ~/Library/Application Support/Efin
+    // Unix: ~/.efin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Particl";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Efin";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -816,10 +816,10 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/Particl";
+    return pathRet / "Library/Application Support/Efin";
 #else
     // Unix
-    return pathRet / ".particl";
+    return pathRet / ".efin";
 #endif
 #endif
 }
@@ -880,7 +880,7 @@ void ArgsManager::ReadConfigFile(const std::string& confPath)
 {
     fs::ifstream streamConfig(GetConfigFile(confPath));
     if (!streamConfig.good())
-        return; // No particl.conf file is OK
+        return; // No efin.conf file is OK
 
     {
         LOCK(cs_args);

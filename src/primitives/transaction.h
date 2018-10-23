@@ -18,9 +18,9 @@
 
 static const int SERIALIZE_TRANSACTION_NO_WITNESS = 0x40000000;
 
-static const uint8_t PARTICL_BLOCK_VERSION = 0xA0;
-static const uint8_t PARTICL_TXN_VERSION = 0xA0;
-static const uint8_t MAX_PARTICL_TXN_VERSION = 0xBF;
+static const uint8_t EFIN_BLOCK_VERSION = 0xA0;
+static const uint8_t EFIN_TXN_VERSION = 0xA0;
+static const uint8_t MAX_EFIN_TXN_VERSION = 0xBF;
 static const uint8_t BTC_TXN_VERSION = 0x02;
 
 
@@ -53,9 +53,9 @@ enum DataOutputTypes
     DO_FUND_MSG             = 8,
 };
 
-inline bool IsParticlTxVersion(int nVersion)
+inline bool IsEfinTxVersion(int nVersion)
 {
-    return (nVersion & 0xFF) >= PARTICL_TXN_VERSION;
+    return (nVersion & 0xFF) >= EFIN_TXN_VERSION;
 }
 
 /** An outpoint - a combination of a transaction hash and an index n into its vout */
@@ -586,7 +586,7 @@ inline void UnserializeTransaction(TxType& tx, Stream& s) {
     tx.nVersion = 0;
     s >> bv;
 
-    if (bv >= PARTICL_TXN_VERSION)
+    if (bv >= EFIN_TXN_VERSION)
     {
         tx.nVersion = bv;
 
@@ -677,7 +677,7 @@ template<typename Stream, typename TxType>
 inline void SerializeTransaction(const TxType& tx, Stream& s) {
     const bool fAllowWitness = !(s.GetVersion() & SERIALIZE_TRANSACTION_NO_WITNESS);
 
-    if (IsParticlTxVersion(tx.nVersion))
+    if (IsEfinTxVersion(tx.nVersion))
     {
         uint8_t bv = tx.nVersion & 0xFF;
         s << bv;
@@ -738,14 +738,14 @@ class CTransaction
 public:
     // Default transaction version.
     static const int32_t CURRENT_VERSION=2;
-    static const int32_t CURRENT_PARTICL_VERSION=0xA0;
+    static const int32_t CURRENT_EFIN_VERSION=0xA0;
 
     // Changing the default transaction version requires a two step process: first
     // adapting relay policy by bumping MAX_STANDARD_VERSION, and then later date
     // bumping the default CURRENT_VERSION at which point both CURRENT_VERSION and
     // MAX_STANDARD_VERSION will be equal.
     static const int32_t MAX_STANDARD_VERSION=2;
-    static const int32_t MAX_STANDARD_PARTICL_VERSION=0xA0;
+    static const int32_t MAX_STANDARD_EFIN_VERSION=0xA0;
 
     // The local variables are made const to prevent unintended modification
     // without updating the cached hash value. However, CTransaction is not
@@ -787,8 +787,8 @@ public:
         return vin.empty() && vout.empty() && vpout.empty();
     }
 
-    bool IsParticlVersion() const {
-        return IsParticlTxVersion(nVersion);
+    bool IsEfinVersion() const {
+        return IsEfinTxVersion(nVersion);
     }
 
     int GetType() const {
@@ -797,7 +797,7 @@ public:
 
     size_t GetNumVOuts() const
     {
-        return IsParticlTxVersion(nVersion) ? vpout.size() : vout.size();
+        return IsEfinTxVersion(nVersion) ? vpout.size() : vout.size();
     }
 
     const uint256& GetHash() const {
@@ -825,7 +825,7 @@ public:
 
     bool IsCoinBase() const
     {
-        if (IsParticlVersion())
+        if (IsEfinVersion())
             return (GetType() == TXN_COINBASE
                 && vin.size() == 1 && vin[0].prevout.IsNull()); // TODO [rm]?
 
@@ -949,13 +949,13 @@ struct CMutableTransaction
         nVersion |= (type & 0xFF) << 8;
     }
 
-    bool IsParticlVersion() const {
-        return IsParticlTxVersion(nVersion);
+    bool IsEfinVersion() const {
+        return IsEfinTxVersion(nVersion);
     }
 
     size_t GetNumVOuts() const
     {
-        return IsParticlTxVersion(nVersion) ? vpout.size() : vout.size();
+        return IsEfinTxVersion(nVersion) ? vpout.size() : vout.size();
     }
 
     /** Compute the hash of this CMutableTransaction. This is computed on the

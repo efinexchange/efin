@@ -1,24 +1,24 @@
-Particl Core integration/staging tree
+Efin Core integration/staging tree
 =====================================
 
-[![Build Status](https://travis-ci.org/particl/particl-core.svg?branch=master)](https://travis-ci.org/particl/particl-core)
+[![Build Status](https://travis-ci.org/efin/efin-core.svg?branch=master)](https://travis-ci.org/efin/efin-core)
 
-https://particl.io
+https://efin.com
 
-What is Particl?
+What is Efin?
 ----------------
 
 An open source, decentralized privacy platform
 built for global person to person eCommerce.
 
 For more information, as well as an immediately useable, binary version of
-the Particl Core software, see https://particl.io.
+the Efin Core software, see https://efin.com.
 
 
 Getting Started
 ---------------
 
-A new Particl wallet will need an HD master key loaded and an initial account
+A new Efin wallet will need an HD master key loaded and an initial account
 derived before it will be functional.
 
 The GUI programs will guide you through the initial setup.
@@ -29,7 +29,7 @@ Loading the new mnemonic with the extkeyimportmaster command will setup the
 master HD key and first account.
 
 To create an initial new HD master key and account from random data, start
-particld or particl-qt with the parameter: -createdefaultmasterkey.
+efind or efin-qt with the parameter: -createdefaultmasterkey.
 
 Remember to backup your passphrase and/or wallet.dat file!
 
@@ -37,15 +37,15 @@ Remember to backup your passphrase and/or wallet.dat file!
 License
 -------
 
-Particl Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+Efin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see https://opensource.org/licenses/MIT.
 
 Development Process
 -------------------
 
 The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/particl/particl-core/tags) are created
-regularly to indicate new official, stable release versions of Particl Core.
+completely stable. [Tags](https://github.com/efin/efin-core/tags) are created
+regularly to indicate new official, stable release versions of Efin Core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 

@@ -1643,7 +1643,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             return false;
         }
 
-        if (!fParticlMode) // NODE_SMSG = (1 << 5)
+        if (!fEfinMode) // NODE_SMSG = (1 << 5)
         if (nServices & ((1 << 7) | (1 << 5))) {
             if (GetTime() < 1533096000) {
                 // Immediately disconnect peers that use service bits 6 or 8 until August 1st, 2018

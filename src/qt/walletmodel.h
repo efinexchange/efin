@@ -234,7 +234,7 @@ public:
     OutputType getDefaultAddressType() const;
 
     void lockWallet();
-    CHDWallet *getParticlWallet() const;
+    CHDWallet *getEfinWallet() const;
     CAmount getReserveBalance();
 
     void checkBalanceChanged();

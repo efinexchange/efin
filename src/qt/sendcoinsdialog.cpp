@@ -158,7 +158,7 @@ void SendCoinsDialog::setModel(WalletModel *_model)
         }
 
         CHDWalletBalances bal;
-        CHDWallet *pw = model->getParticlWallet();
+        CHDWallet *pw = model->getEfinWallet();
         pw->GetBalances(bal);
 
         setBalance(bal.nPart, bal.nPartStaked, bal.nBlind, bal.nAnon, bal.nPartUnconf, bal.nPartImmature,
@@ -683,7 +683,7 @@ void SendCoinsDialog::updateDisplayUnit()
     if (!model)
         return;
     CHDWalletBalances bal;
-    CHDWallet *pw = model->getParticlWallet();
+    CHDWallet *pw = model->getEfinWallet();
     pw->GetBalances(bal);
 
     setBalance(bal.nPart, bal.nPartStaked, bal.nBlind, bal.nAnon, bal.nPartUnconf, bal.nPartImmature,
@@ -975,7 +975,7 @@ void SendCoinsDialog::coinControlChangeEdited(const QString& text)
         }
         else if (!IsValidDestination(dest)) // Invalid address
         {
-            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid Particl address"));
+            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid Efin address"));
         }
         else // Valid address
         {

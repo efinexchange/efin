@@ -1650,7 +1650,7 @@ void CWalletTx::GetAmounts(
     };
 
     // Sent/received.
-    if (tx->IsParticlVersion())
+    if (tx->IsEfinVersion())
     {
         bool fFoundChange = false;
         for (unsigned int i = 0; i < tx->vpout.size(); ++i)
@@ -2025,7 +2025,7 @@ CAmount CWalletTx::GetAvailableCredit(bool fUseCache) const
     CAmount nCredit = 0;
     const uint256 &hashTx = GetHash();
 
-    if (fParticlWallet)
+    if (fEfinWallet)
     {
         for (unsigned int i = 0; i < tx->vpout.size(); i++)
         {
@@ -2081,7 +2081,7 @@ CAmount CWalletTx::GetAvailableWatchOnlyCredit(const bool fUseCache) const
 
     const uint256 &hashTx = GetHash();
     CAmount nCredit = 0;
-    if (fParticlWallet)
+    if (fEfinWallet)
     {
         for (unsigned int i = 0; i < tx->vpout.size(); i++)
         {
@@ -2150,7 +2150,7 @@ bool CWalletTx::IsTrusted() const
         if (parent == nullptr)
             return false;
 
-        if (tx->IsParticlVersion())
+        if (tx->IsEfinVersion())
         {
             const CTxOutBase *parentOut = parent->tx->vpout[txin.prevout.n].get();
             if (pwallet->IsMine(parentOut) != ISMINE_SPENDABLE)
@@ -4234,7 +4234,7 @@ CWallet* CWallet::CreateWalletFromFile(const std::string walletFile, CWallet *wa
     walletInstance->m_last_block_processed = chainActive.Tip();
     RegisterValidationInterface(walletInstance);
 
-    if (!fParticlMode) // Must rescan after hdwallet is loaded
+    if (!fEfinMode) // Must rescan after hdwallet is loaded
     if (chainActive.Tip() && chainActive.Tip() != pindexRescan)
     {
         //We can't rescan beyond non-pruned blocks, stop and throw an error
@@ -4408,7 +4408,7 @@ int CMerkleTx::GetBlocksToMaturity() const
     if (!(IsCoinBase() || IsCoinStake()))
         return 0;
 
-    if (fParticlMode && (chainActive.Height() < COINBASE_MATURITY * 2))
+    if (fEfinMode && (chainActive.Height() < COINBASE_MATURITY * 2))
     {
         BlockMap::iterator mi = mapBlockIndex.find(hashBlock);
         if (mi == mapBlockIndex.end())
@@ -4471,7 +4471,7 @@ const std::string& FormatOutputType(OutputType type)
 
 void CWallet::LearnRelatedScripts(const CPubKey& key, OutputType type)
 {
-    if (fParticlMode)
+    if (fEfinMode)
         return;
     if (key.IsCompressed() && (type == OUTPUT_TYPE_P2SH_SEGWIT || type == OUTPUT_TYPE_BECH32)) {
         CTxDestination witdest = WitnessV0KeyHash(key.GetID());

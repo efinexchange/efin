@@ -154,7 +154,7 @@ public:
         return false;
     }
 
-    virtual bool IsParticlVersion() const { return false; }
+    virtual bool IsEfinVersion() const { return false; }
 
     virtual ~BaseSignatureChecker() {}
 };
@@ -182,9 +182,9 @@ public:
         return txTo && txTo->IsCoinStake();
     }
 
-    bool IsParticlVersion() const override
+    bool IsEfinVersion() const override
     {
-        return txTo && txTo->IsParticlVersion();
+        return txTo && txTo->IsEfinVersion();
     }
 };
 

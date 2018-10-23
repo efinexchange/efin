@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Particl Core developers
+// Copyright (c) 2018 The Efin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -818,7 +818,7 @@ UniValue devicegetnewstealthaddress(const JSONRPCRequest &request)
     if (request.fHelp || request.params.size() > 4)
         throw std::runtime_error(
             "devicegetnewstealthaddress [label] [num_prefix_bits] [prefix_num] [bech32]\n"
-            "Returns a new Particl stealth address for receiving payments."
+            "Returns a new Efin stealth address for receiving payments."
             + HelpRequiringPassphrase(pwallet) +
             "\nArguments:\n"
             "1. \"label\"             (string, optional) If specified the key is added to the address book.\n"

@@ -113,7 +113,7 @@
 <context>
     <name>Intro</name>
     <message>
-        <source>Particl</source>
+        <source>Efin</source>
         <translation>ביטקוין</translation>
     </message>
     </context>

@@ -16,7 +16,7 @@ osx=true
 SIGNER=
 VERSION=
 commit=false
-url=https://github.com/particl/particl-core
+url=https://github.com/efin/efin-core
 proc=2
 mem=3000
 lxc=true
@@ -30,7 +30,7 @@ commitFiles=true
 read -d '' usage <<- EOF
 Usage: $scriptName [-c|u|v|b|s|B|o|h|j|m|] signer version
 
-Run this script from the directory containing the particl, gitian-builder, gitian.sigs, and bitcoin-detached-sigs.
+Run this script from the directory containing the efin, gitian-builder, gitian.sigs, and bitcoin-detached-sigs.
 
 Arguments:
 signer          GPG signer to sign each build assert file
@@ -38,7 +38,7 @@ version         Version number, commit, or branch to build. If building a commit
 
 Options:
 -c|--commit     Indicate that the version argument is for a commit or branch
--u|--url        Specify the URL of the repository. Default is https://github.com/particl/particl-core
+-u|--url        Specify the URL of the repository. Default is https://github.com/efin/efin-core
 -v|--verify     Verify the Gitian build
 -b|--build      Do a Gitian build
 -s|--sign       Make signed binaries for Windows and Mac OSX
@@ -231,7 +231,7 @@ echo ${COMMIT}
 if [[ $setup = true ]]
 then
     sudo apt-get install ruby apache2 git apt-cacher-ng python-vm-builder qemu-kvm qemu-utils
-    git clone https://github.com/particl/gitian.sigs
+    git clone https://github.com/efin/gitian.sigs
     #git clone https://github.com/bitcoin-core/bitcoin-detached-sigs.git
     git clone https://github.com/devrandom/gitian-builder.git
     pushd ./gitian-builder
@@ -246,7 +246,7 @@ then
 fi
 
 # Set up build
-pushd ./particl-core
+pushd ./efin-core
 git fetch --tags
 git checkout ${COMMIT}
 popd
@@ -255,7 +255,7 @@ popd
 if [[ $build = true ]]
 then
     # Make output folder
-    mkdir -p ./particl-binaries/${VERSION}
+    mkdir -p ./efin-binaries/${VERSION}
 
     # Build Dependencies
     echo ""
@@ -265,7 +265,7 @@ then
     mkdir -p inputs
     wget -N -P inputs $osslPatchUrl
     wget -N -P inputs $osslTarUrl
-    make -C ../particl-core/depends download SOURCES_PATH=`pwd`/cache/common
+    make -C ../efin-core/depends download SOURCES_PATH=`pwd`/cache/common
 
     # Linux
     if [[ $linux = true ]]
@@ -273,9 +273,9 @@ then
             echo ""
         echo "Compiling ${VERSION} Linux"
         echo ""
-        ./bin/gbuild --allow-sudo -j ${proc} -m ${mem} --commit particl-core=${COMMIT} --url particl-core=${url} ../particl-core/contrib/gitian-descriptors/gitian-linux.yml
-        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../particl-core/contrib/gitian-descriptors/gitian-linux.yml
-        mv build/out/particl-*.tar.gz build/out/src/particl-*.tar.gz ../particl-binaries/${VERSION}
+        ./bin/gbuild --allow-sudo -j ${proc} -m ${mem} --commit efin-core=${COMMIT} --url efin-core=${url} ../efin-core/contrib/gitian-descriptors/gitian-linux.yml
+        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../efin-core/contrib/gitian-descriptors/gitian-linux.yml
+        mv build/out/efin-*.tar.gz build/out/src/efin-*.tar.gz ../efin-binaries/${VERSION}
     fi
     # Windows
     if [[ $windows = true ]]
@@ -283,10 +283,10 @@ then
         echo ""
         echo "Compiling ${VERSION} Windows"
         echo ""
-        ./bin/gbuild -j ${proc} -m ${mem} --commit particl-core=${COMMIT} --url particl-core=${url} ../particl-core/contrib/gitian-descriptors/gitian-win.yml
-        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../particl-core/contrib/gitian-descriptors/gitian-win.yml
-        mv build/out/particl-*-win-unsigned.tar.gz inputs/particl-win-unsigned.tar.gz
-        mv build/out/particl-*.zip build/out/particl-*.exe ../particl-binaries/${VERSION}
+        ./bin/gbuild -j ${proc} -m ${mem} --commit efin-core=${COMMIT} --url efin-core=${url} ../efin-core/contrib/gitian-descriptors/gitian-win.yml
+        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../efin-core/contrib/gitian-descriptors/gitian-win.yml
+        mv build/out/efin-*-win-unsigned.tar.gz inputs/efin-win-unsigned.tar.gz
+        mv build/out/efin-*.zip build/out/efin-*.exe ../efin-binaries/${VERSION}
     fi
     # Mac OSX
     if [[ $osx = true ]]
@@ -294,10 +294,10 @@ then
         echo ""
         echo "Compiling ${VERSION} Mac OSX"
         echo ""
-        ./bin/gbuild -j ${proc} -m ${mem} --commit particl-core=${COMMIT} --url particl-core=${url} ../particl-core/contrib/gitian-descriptors/gitian-osx.yml
-        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../particl-core/contrib/gitian-descriptors/gitian-osx.yml
-        mv build/out/particl-*-osx-unsigned.tar.gz inputs/particl-osx-unsigned.tar.gz
-        mv build/out/particl-*.tar.gz build/out/particl-*.dmg ../particl-binaries/${VERSION}
+        ./bin/gbuild -j ${proc} -m ${mem} --commit efin-core=${COMMIT} --url efin-core=${url} ../efin-core/contrib/gitian-descriptors/gitian-osx.yml
+        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../efin-core/contrib/gitian-descriptors/gitian-osx.yml
+        mv build/out/efin-*-osx-unsigned.tar.gz inputs/efin-osx-unsigned.tar.gz
+        mv build/out/efin-*.tar.gz build/out/efin-*.dmg ../efin-binaries/${VERSION}
     fi
     popd
 
@@ -324,27 +324,27 @@ then
     echo ""
     echo "Verifying v${VERSION} Linux"
     echo ""
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../particl-core/contrib/gitian-descriptors/gitian-linux.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../efin-core/contrib/gitian-descriptors/gitian-linux.yml
     # Windows
     echo ""
     echo "Verifying v${VERSION} Windows"
     echo ""
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../particl-core/contrib/gitian-descriptors/gitian-win.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../efin-core/contrib/gitian-descriptors/gitian-win.yml
     # Mac OSX
     echo ""
     echo "Verifying v${VERSION} Mac OSX"
     echo ""
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../particl-core/contrib/gitian-descriptors/gitian-osx.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../efin-core/contrib/gitian-descriptors/gitian-osx.yml
     # Signed Windows
     echo ""
     echo "Verifying v${VERSION} Signed Windows"
     echo ""
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../particl-core/contrib/gitian-descriptors/gitian-osx-signer.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../efin-core/contrib/gitian-descriptors/gitian-osx-signer.yml
     # Signed Mac OSX
     echo ""
     echo "Verifying v${VERSION} Signed Mac OSX"
     echo ""
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../particl-core/contrib/gitian-descriptors/gitian-osx-signer.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../efin-core/contrib/gitian-descriptors/gitian-osx-signer.yml
     popd
 fi
 
@@ -359,10 +359,10 @@ then
         echo ""
         echo "Signing ${VERSION} Windows"
         echo ""
-        ./bin/gbuild -i --commit signature=${COMMIT} ../particl-core/contrib/gitian-descriptors/gitian-win-signer.yml
-        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../particl-core/contrib/gitian-descriptors/gitian-win-signer.yml
-        mv build/out/particl-*win64-setup.exe ../particl-binaries/${VERSION}
-        mv build/out/particl-*win32-setup.exe ../particl-binaries/${VERSION}
+        ./bin/gbuild -i --commit signature=${COMMIT} ../efin-core/contrib/gitian-descriptors/gitian-win-signer.yml
+        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../efin-core/contrib/gitian-descriptors/gitian-win-signer.yml
+        mv build/out/efin-*win64-setup.exe ../efin-binaries/${VERSION}
+        mv build/out/efin-*win32-setup.exe ../efin-binaries/${VERSION}
     fi
     # Sign Mac OSX
     if [[ $osx = true ]]
@@ -370,9 +370,9 @@ then
         echo ""
         echo "Signing ${VERSION} Mac OSX"
         echo ""
-        ./bin/gbuild -i --commit signature=${COMMIT} ../particl-core/contrib/gitian-descriptors/gitian-osx-signer.yml
-        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../particl-core/contrib/gitian-descriptors/gitian-osx-signer.yml
-        mv build/out/particl-osx-signed.dmg ../particl-binaries/${VERSION}/particl-${VERSION}-osx.dmg
+        ./bin/gbuild -i --commit signature=${COMMIT} ../efin-core/contrib/gitian-descriptors/gitian-osx-signer.yml
+        ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../efin-core/contrib/gitian-descriptors/gitian-osx-signer.yml
+        mv build/out/efin-osx-signed.dmg ../efin-binaries/${VERSION}/efin-${VERSION}-osx.dmg
     fi
     popd
 
