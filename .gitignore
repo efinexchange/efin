@@ -122,3 +122,5 @@ test/cache/*
 
 libefinconsensus.pc
 contrib/devtools/split-debug.sh
+
+.vscode

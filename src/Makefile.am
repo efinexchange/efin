@@ -96,6 +96,9 @@ BITCOIN_CORE_H = \
   chainparamsbase.h \
   chainparamsseeds.h \
   chainparamsimport.h \
+  chainparams_mainnet.h \
+  chainparams_testnet.h \
+  chainparams_regtest.h \
   checkpoints.h \
   checkqueue.h \
   clientversion.h \
@@ -394,6 +397,9 @@ libefin_common_a_SOURCES = \
   base58.cpp \
   bech32.cpp \
   chainparams.cpp \
+  chainparams_mainnet.cpp \
+  chainparams_testnet.cpp \
+  chainparams_regtest.cpp \
   coins.cpp \
   compressor.cpp \
   core_read.cpp \
