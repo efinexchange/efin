@@ -419,8 +419,8 @@ void ThreadStakeMiner(size_t nThreadID, std::vector<CWalletRef> &vpwallets, size
                 CBlock *pblock = &pblocktemplate->block;
                 if (CheckStake(pblock))
                 {
-                     nTimeLastStake = GetTime();
-                     break;
+                    nTimeLastStake = GetTime();
+                    break;
                 };
             } else
             {

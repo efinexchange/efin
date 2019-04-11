@@ -2784,7 +2784,21 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     if (fJustCheck)
         return true;
 
-    pindex->nMoneySupply = (pindex->pprev? pindex->pprev->nMoneySupply : 0) + nMoneyCreated;
+    if (fEfinMode) {
+        // The money created when staking should only consider coins as a result of
+        // staking. No transaction fees should be considered because those were paid
+        // by the transaction sender and then collected by the miner.
+        if (pindex->pprev) {
+            pindex->nMoneySupply = pindex->pprev->nMoneySupply
+                + std::min(nMoneyCreated, Params().GetProofOfStakeReward(pindex->pprev, 0));
+        } else
+        {
+            pindex->nMoneySupply = nMoneyCreated;
+        }
+    } else
+    {
+        pindex->nMoneySupply = (pindex->pprev ? pindex->pprev->nMoneySupply : 0) + nMoneyCreated;
+    }
     setDirtyBlockIndex.insert(pindex); // pindex has changed, must save to disk
 
     if (!fIsGenesisBlock

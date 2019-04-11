@@ -20,17 +20,19 @@ int64_t CChainParams::GetCoinYearReward(int64_t nTime, CAmount nMoneySupply) con
 {
     static const int64_t nSecondsInYear = 365 * 24 * 60 * 60;
 
+    int64_t coinYearReward = nCoinYearReward; // Use default of 1%
+
     if (strNetworkID != "regtest")
     {
-        // Y1 5%, YN 2%
+        // Y1 5%, YN 1%
         int64_t nYearsSinceGenesis = (nTime - genesis.nTime) / nSecondsInYear;
 
         if (nYearsSinceGenesis == 0)
-            return 5 * CENT;
+            coinYearReward = 5 * CENT; // 5% for the first year
     };
 
     // No reward once the max money supply has been reached.
-    return nMoneySupply <= MAX_MONEY ? nCoinYearReward : 0;
+    return nMoneySupply < MAX_MONEY ? coinYearReward : 0;
 };
 
 int64_t CChainParams::GetProofOfStakeReward(const CBlockIndex *pindexPrev, int64_t nFees) const
@@ -2122,7 +2124,7 @@ public:
         nBIP44ID = 0x80000090; // 144'
 
         nModifierInterval = 10 * 60;    // 10 minutes
-        nStakeMinConfirmations = 20;   // 225 * 2 minutes
+        nStakeMinConfirmations = 225;   // 225 * 2 minutes
         nTargetSpacing = 120;           // 2 minutes
         nTargetTimespan = 24 * 60;      // 24 mins
 
